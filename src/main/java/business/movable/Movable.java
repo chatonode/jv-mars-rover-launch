@@ -1,4 +1,6 @@
-package common;
+package business.movable;
+
+import business.environment.Position;
 
 public interface Movable {
     public boolean move(Position nextPosition);

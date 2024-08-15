@@ -1,7 +1,6 @@
-package business.plateau;
+package business.environment;
 
-import business.invader.Rover;
-import common.Position;
+import business.movable.invader.Rover;
 import utils.ValidationUtils;
 import validation.ParameterValidator;
 import validation.ParamIsValidMap;

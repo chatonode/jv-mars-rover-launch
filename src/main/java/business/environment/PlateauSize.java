@@ -1,4 +1,4 @@
-package business.plateau;
+package business.environment;
 
 public class PlateauSize {
     private final XCoords xCoordinates;

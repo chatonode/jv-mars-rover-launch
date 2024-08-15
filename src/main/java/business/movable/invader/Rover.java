@@ -1,4 +1,4 @@
-package business.invader;
+package business.movable.invader;
 
 import java.util.function.Predicate;
 
@@ -6,11 +6,11 @@ import utils.ValidationUtils;
 import validation.ParameterValidator;
 import validation.ParamIsValidMap;
 
-import common.Position;
+import business.environment.Position;
 
 public class Rover extends Invader {
-    private String producedBy;
-    private Integer producedYear;
+    private final String producedBy;
+    private final Integer producedYear;
 
     public Rover(String name, Position initialPosition, String producedBy, Integer producedYear) {
         super(name, initialPosition);
@@ -43,10 +43,10 @@ public class Rover extends Invader {
     }
 
     public String getProducedBy() {
-        return producedBy;
+        return this.producedBy;
     }
 
     public Integer getProducedYear() {
-        return producedYear;
+        return this.producedYear;
     }
 }

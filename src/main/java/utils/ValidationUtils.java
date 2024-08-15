@@ -1,9 +1,8 @@
 package utils;
 
-import common.Position;
+import business.environment.Position;
 
 import java.time.LocalDate;
-import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
 public class ValidationUtils {

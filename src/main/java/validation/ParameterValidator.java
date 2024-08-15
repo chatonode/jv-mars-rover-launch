@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Comparator;
 
-import common.exception.InvalidClassParameterException;
+import exception.business.InvalidClassParameterException;
 
 public class ParameterValidator {
     public static void validateArgs(ParamIsValidMap paramIsValidMap) throws InvalidClassParameterException {

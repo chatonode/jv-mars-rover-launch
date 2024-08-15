@@ -1,4 +1,4 @@
-package business.plateau;
+package business.environment;
 
 public class YCoords {
     private final int start;

@@ -1,4 +1,6 @@
-package common;
+package business.environment;
+
+import common.enums.CompassDirection;
 
 public class Position {
     private int x;

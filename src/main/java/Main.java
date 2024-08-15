@@ -1,9 +1,8 @@
-import business.invader.Rover;
-import business.plateau.Plateau;
-import common.CompassDirection;
-import common.Position;
+import business.movable.invader.Rover;
+import business.environment.Plateau;
+import common.enums.CompassDirection;
+import business.environment.Position;
 import input.parser.InstructionParser;
-import business.plateau.PlateauSize;
 
 public class Main {
     public static void main(String[] args) {

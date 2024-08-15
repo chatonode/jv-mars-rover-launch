@@ -1,14 +1,14 @@
-package business.invader;
+package business.movable.invader;
 
 import java.util.UUID;
 import java.util.function.Predicate;
 
+import business.movable.Movable;
 import validation.ParamIsValidMap;
 import validation.ParameterValidator;
 import utils.ValidationUtils;
 
-import common.Movable;
-import common.Position;
+import business.environment.Position;
 
 public abstract class Invader implements Movable {
     protected final String id;
