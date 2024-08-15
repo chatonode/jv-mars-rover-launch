@@ -3,8 +3,8 @@ package business.invader;
 import java.util.function.Predicate;
 
 import utils.ValidationUtils;
-import validation.ArgumentValidator;
-import validation.IsValidArgumentNameMap;
+import validation.ParameterValidator;
+import validation.ParamIsValidMap;
 
 import common.Position;
 
@@ -15,9 +15,9 @@ public class Rover extends Invader {
     public Rover(String name, Position initialPosition, String producedBy, Integer producedYear) {
         super(name, initialPosition);
 
-        ArgumentValidator.validateArgs(new IsValidArgumentNameMap() {{
-            put(checkProducedByValidity.test(producedBy), "producedBy");
-            put(checkProducedYearValidity.test(producedYear), "producedYear");
+        ParameterValidator.validateArgs(new ParamIsValidMap() {{
+            put("producedBy", checkProducedByValidity.test(producedBy));
+            put("producedYear", checkProducedYearValidity.test(producedYear));
         }});
 
         this.producedBy = producedBy;

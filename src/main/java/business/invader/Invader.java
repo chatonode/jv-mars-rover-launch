@@ -3,13 +3,12 @@ package business.invader;
 import java.util.UUID;
 import java.util.function.Predicate;
 
-import validation.IsValidArgumentNameMap;
-import validation.ArgumentValidator;
+import validation.ParamIsValidMap;
+import validation.ParameterValidator;
 import utils.ValidationUtils;
 
 import common.Movable;
 import common.Position;
-
 
 public abstract class Invader implements Movable {
     protected final String id;
@@ -18,9 +17,9 @@ public abstract class Invader implements Movable {
     protected Position currentPosition;
 
     public Invader(String name, Position initialPosition) {
-        ArgumentValidator.validateArgs(new IsValidArgumentNameMap() {{
-            put(checkNameValidity.test(name), "name");
-            put(checkInitialPositionValidity.test(initialPosition), "initialPosition");
+        ParameterValidator.validateArgs(new ParamIsValidMap() {{
+            put("name", checkNameValidity.test(name));
+            put("initialPosition", checkInitialPositionValidity.test(initialPosition));
         }});
 
         this.id = UUID.randomUUID().toString();

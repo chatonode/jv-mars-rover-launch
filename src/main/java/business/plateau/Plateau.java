@@ -3,21 +3,20 @@ package business.plateau;
 import business.invader.Rover;
 import common.Position;
 import utils.ValidationUtils;
-import validation.ArgumentValidator;
-import validation.IsValidArgumentNameMap;
+import validation.ParameterValidator;
+import validation.ParamIsValidMap;
 
-import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
 public class Plateau {
-    private PlateauSize plateauSize;
+    private final PlateauSize plateauSize;
     private Map<Rover, Position> roverPositionMap;
 
     public Plateau(int maximumX, int maximumY) {
-        ArgumentValidator.validateArgs(new IsValidArgumentNameMap() {{
-            put(checkMaximumCoordinateValidity.test(maximumX), "maximumX");
-            put(checkMaximumCoordinateValidity.test(maximumY), "maximumY");
+        ParameterValidator.validateArgs(new ParamIsValidMap() {{
+            put("maximumX", checkMaximumCoordinateValidity.test(maximumX));
+            put("maximumY", checkMaximumCoordinateValidity.test(maximumY));
         }});
 
         this.plateauSize = new PlateauSize(maximumX, maximumY);
