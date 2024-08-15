@@ -26,6 +26,7 @@ public abstract class Invader implements Movable {
         this.id = UUID.randomUUID().toString();
         this.name = name;
         this.initialPosition = initialPosition;
+        this.currentPosition = this.initialPosition;
 
         this.printLandingMessage();
     }
@@ -34,7 +35,7 @@ public abstract class Invader implements Movable {
     protected final Predicate<Position> checkInitialPositionValidity = ValidationUtils.checkPositionValidity;
 
     protected void printLandingMessage() {
-        System.out.printf("%s (<%s>) is landed in these coordinates on the plateau X=%d <-> Y=%d, facing %s direction.",
+        System.out.printf("%s (%s) is landed in these coordinates on the plateau X:%d - Y:%d, facing %s direction.\n",
                 this.name,
                 this.getClass().getSimpleName(),
                 this.initialPosition.getX(),

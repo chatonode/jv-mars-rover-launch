@@ -12,7 +12,7 @@ public class ValidationUtils {
 
     public static Predicate<Position> checkPositionValidity = position -> position != null;
 
-    public static Predicate<Integer> checkRoverYearValidity = year -> year != null && year < 1957 && year > LocalDate.now().getYear();
+    public static Predicate<Integer> checkRoverYearValidity = year -> (year != null && year > 1957 && year < LocalDate.now().getYear());
 
     public static Predicate<Integer> checkCoordinateValidity = coordinateToSet -> coordinateToSet > 0;
 }

@@ -7,8 +7,10 @@ import common.exception.InvalidAttributeException;
 
 public class ArgumentValidator {
     public static void validateArgs(IsValidArgumentNameMap isValidArgumentNameMap) throws InvalidAttributeException {
+        System.out.println("Initial Arg Map: " + isValidArgumentNameMap);
+
         List<String> argumentsWithError = isValidArgumentNameMap.entrySet().stream()
-                .filter(Map.Entry::getKey)
+                .filter(isValidArgumentNameEntry -> !isValidArgumentNameEntry.getKey())
                 .map(Map.Entry::getValue)
                 .toList();
 
