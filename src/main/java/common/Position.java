@@ -1,11 +1,9 @@
 package common;
 
-import plateau.XCoords;
-
 public class Position {
-    private final int x;
-    private final int y;
-    private final CompassDirection facingDirection;
+    private int x;
+    private int y;
+    private CompassDirection facingDirection;
 
     public Position(int x, int y, CompassDirection facingDirection) {
         this.x = x;
@@ -23,5 +21,17 @@ public class Position {
 
     public CompassDirection getFacingDirection() {
         return facingDirection;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public void setFacingDirection(CompassDirection facingDirection) {
+        this.facingDirection = facingDirection;
     }
 }

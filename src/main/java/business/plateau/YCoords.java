@@ -1,19 +1,19 @@
-package plateau;
+package business.plateau;
 
-public class XCoords {
+public class YCoords {
     private final int start;
     private final int end;
 
-    protected XCoords(int start, int end) {
+    protected YCoords(int start, int end) {
         this.start = start;
         this.end = end;
     }
 
     public int getStart() {
-        return start;
+        return this.start;
     }
 
     public int getEnd() {
-        return end;
+        return this.end;
     }
 }

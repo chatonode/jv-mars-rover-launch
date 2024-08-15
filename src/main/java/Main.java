@@ -1,5 +1,5 @@
 import input.parser.InstructionParser;
-import plateau.PlateauSize;
+import business.plateau.PlateauSize;
 
 public class Main {
     public static void main(String[] args) {
