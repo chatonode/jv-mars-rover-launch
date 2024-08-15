@@ -1,4 +1,4 @@
-package exception.input;
+package exceptions.input;
 
 public class ParsingException extends RuntimeException {
     public ParsingException(String s) {

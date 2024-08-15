@@ -1,7 +1,7 @@
 package input.parser;
 
 import common.enums.Instruction;
-import exception.input.ParsingException;
+import exceptions.input.ParsingException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

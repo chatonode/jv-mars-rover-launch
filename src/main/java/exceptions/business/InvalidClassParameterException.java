@@ -1,4 +1,4 @@
-package exception.business;
+package exceptions.business;
 
 import java.util.List;
 
