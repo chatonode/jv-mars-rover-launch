@@ -1,10 +1,12 @@
 package business.invader;
 
-import common.Position;
-import common.ValidationUtils;
+import java.util.function.Predicate;
 
-import java.util.ArrayList;
-import java.util.List;
+import utils.ValidationUtils;
+import validation.ArgumentValidator;
+import validation.IsValidArgumentNameMap;
+
+import common.Position;
 
 public class Rover extends Invader {
     private String producedBy;
@@ -13,22 +15,17 @@ public class Rover extends Invader {
     public Rover(String name, Position initialPosition, String producedBy, Integer producedYear) {
         super(name, initialPosition);
 
-        validateAdditionals(producedBy, producedYear);
+        ArgumentValidator.validateArgs(new IsValidArgumentNameMap() {{
+            put(checkProducedByValidity.test(producedBy), "producedBy");
+            put(checkProducedYearValidity.test(producedYear), "producedYear");
+        }});
 
         this.producedBy = producedBy;
         this.producedYear = producedYear;
     }
 
-    private void validateAdditionals(String producedBy, Integer producedYear) {
-        boolean isProducedByValid = ValidationUtils.checkStringValidity.test(producedBy);
-        boolean isProducedYearValid = ValidationUtils.checkRoverYearValidity.test(producedYear);
-
-        List<String> errArgs = new ArrayList<>();
-        if (isProducedByValid) errArgs.add("producedBy");
-        if (!isProducedYearValid) errArgs.add("producedYear");
-
-        super.validateFinally(!isProducedByValid || !isProducedYearValid, errArgs);
-    }
+    private final Predicate<String> checkProducedByValidity = ValidationUtils.checkStringValidity;
+    private final Predicate<Integer> checkProducedYearValidity = ValidationUtils.checkRoverYearValidity;
 
     @Override
     public boolean move(Position nextPosition) {
