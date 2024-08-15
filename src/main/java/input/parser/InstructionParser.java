@@ -2,7 +2,6 @@ package input.parser;
 
 import common.Instruction;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,7 +21,5 @@ public class InstructionParser extends InputParser<String, List<Instruction>> {
         }).toList();
 
         return instructions;
-
-//        return new ArrayList<>();
     }
 }
