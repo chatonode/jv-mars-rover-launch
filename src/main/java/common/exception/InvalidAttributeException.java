@@ -1,4 +1,4 @@
-package common;
+package common.exception;
 
 import java.util.List;
 public class InvalidAttributeException extends RuntimeException {

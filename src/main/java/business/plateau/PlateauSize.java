@@ -4,16 +4,16 @@ public class PlateauSize {
     private final XCoords xCoordinates;
     private final YCoords yCoordinates;
 
-    public PlateauSize(int maxXValue, int maxYValue) {
-        this.xCoordinates = new XCoords(0, maxXValue);
-        this.yCoordinates = new YCoords(0, maxYValue);
+    PlateauSize(int maximumXValue, int maximumYValue) {
+        this.xCoordinates = new XCoords(0, maximumXValue);
+        this.yCoordinates = new YCoords(0, maximumYValue);
     }
 
-    public XCoords getXCoordinates() {
-        return this.xCoordinates;
+    public int getMaximumX() {
+        return this.xCoordinates.getEnd();
     }
 
-    public YCoords getYCoordinates() {
-        return this.yCoordinates;
+    public int getMaximumY() {
+        return this.yCoordinates.getEnd();
     }
 }
