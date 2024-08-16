@@ -1,4 +1,4 @@
-import business.movable.invader.Rover;
+import business.movable.explorer.Rover;
 import business.environment.Plateau;
 import common.enums.CompassDirection;
 import business.environment.Position;

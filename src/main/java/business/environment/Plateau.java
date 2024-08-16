@@ -1,6 +1,6 @@
 package business.environment;
 
-import business.movable.invader.Rover;
+import business.movable.explorer.Rover;
 import utils.ValidationUtils;
 import validation.ParameterValidator;
 import validation.ParamIsValidMap;

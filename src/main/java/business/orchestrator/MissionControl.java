@@ -30,4 +30,6 @@ public class MissionControl {
     public Plateau getPlateau() {
         return this.plateau;
     }
+
+//    public Rover createRover()
 }

@@ -1,4 +1,4 @@
-package business.movable.invader;
+package business.movable.explorer;
 
 import java.util.UUID;
 import java.util.function.Predicate;
@@ -10,13 +10,13 @@ import utils.ValidationUtils;
 
 import business.environment.Position;
 
-public abstract class Invader implements Movable {
+public abstract class Explorer implements Movable {
     protected final String id;
     protected final String name;
     protected final Position initialPosition;
     protected Position currentPosition;
 
-    public Invader(String name, Position initialPosition) {
+    public Explorer(String name, Position initialPosition) {
         ParameterValidator.validateArgs(new ParamIsValidMap() {{
             put("name", checkNameValidity.test(name));
             put("initialPosition", checkInitialPositionValidity.test(initialPosition));

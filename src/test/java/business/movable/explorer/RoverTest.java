@@ -1,4 +1,4 @@
-package business.movable.invader;
+package business.movable.explorer;
 
 import java.time.LocalDate;
 

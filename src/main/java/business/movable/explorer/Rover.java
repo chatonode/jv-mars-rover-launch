@@ -1,4 +1,4 @@
-package business.movable.invader;
+package business.movable.explorer;
 
 import java.util.function.Predicate;
 
@@ -8,7 +8,7 @@ import validation.ParamIsValidMap;
 
 import business.environment.Position;
 
-public class Rover extends Invader {
+public class Rover extends Explorer {
     private final String producedBy;
     private final Integer producedYear;
 
