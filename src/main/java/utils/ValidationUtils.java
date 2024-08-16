@@ -13,5 +13,5 @@ public class ValidationUtils {
 
     public static Predicate<Integer> checkRoverYearValidity = year -> (year != null && year > 1957 && year < LocalDate.now().getYear());
 
-    public static Predicate<Integer> checkCoordinateValidity = coordinateToSet -> coordinateToSet > 0;
+    public static Predicate<Integer> checkCoordinateValidity = coordinate -> coordinate != null && coordinate > 0;
 }
