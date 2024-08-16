@@ -7,7 +7,7 @@ import java.util.Comparator;
 import exceptions.business.InvalidClassParameterException;
 
 public class ParameterValidator {
-    public static void validateArgs(ParamIsValidMap paramIsValidMap) throws InvalidClassParameterException {
+    public static void validateParams(ParamIsValidMap paramIsValidMap) throws InvalidClassParameterException {
         List<String> invalidParams = paramIsValidMap.entrySet().stream()
                 .filter(paramIsValidEntry -> !paramIsValidEntry.getValue())
                 .map(Map.Entry::getKey)

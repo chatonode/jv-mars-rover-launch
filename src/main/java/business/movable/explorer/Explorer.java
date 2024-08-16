@@ -17,7 +17,7 @@ public abstract class Explorer implements Movable {
     protected Position currentPosition;
 
     public Explorer(String name, Position initialPosition) {
-        ParameterValidator.validateArgs(new ParamIsValidMap() {{
+        ParameterValidator.validateParams(new ParamIsValidMap() {{
             put("name", checkNameValidity.test(name));
             put("initialPosition", checkInitialPositionValidity.test(initialPosition));
         }});

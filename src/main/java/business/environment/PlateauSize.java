@@ -9,6 +9,14 @@ public class PlateauSize {
         this.yCoordinates = new YCoords(0, maximumYValue);
     }
 
+    protected int getMinimumX() {
+        return this.xCoordinates.getStart();
+    }
+
+    protected int getMinimumY() {
+        return this.yCoordinates.getStart();
+    }
+
     protected int getMaximumX() {
         return this.xCoordinates.getEnd();
     }
@@ -16,4 +24,6 @@ public class PlateauSize {
     protected int getMaximumY() {
         return this.yCoordinates.getEnd();
     }
+
+
 }
