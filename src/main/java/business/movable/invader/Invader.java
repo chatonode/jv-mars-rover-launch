@@ -42,4 +42,22 @@ public abstract class Invader implements Movable {
                 this.initialPosition.getFacingDirection()
         );
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public Position getInitialPosition() {
+        return initialPosition;
+    }
+
+    @Override
+    public Position getCurrentPosition() {
+        return currentPosition;
+    }
 }

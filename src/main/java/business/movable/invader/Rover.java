@@ -27,19 +27,16 @@ public class Rover extends Invader {
     private final Predicate<String> checkProducedByValidity = ValidationUtils.checkStringValidity;
     private final Predicate<Integer> checkProducedYearValidity = ValidationUtils.checkRoverYearValidity;
 
+    private final Predicate<Position> checkNextPositionValidity = ValidationUtils.checkPositionValidity;
+
     @Override
     public boolean move(Position nextPosition) {
-        return false;
-    }
+        ParameterValidator.validateArgs(new ParamIsValidMap() {{
+            put("nextPosition", checkNextPositionValidity.test(nextPosition));
+        }});
 
-    @Override
-    public Position getInitialPosition() {
-        return this.initialPosition;
-    }
-
-    @Override
-    public Position getCurrentPosition() {
-        return this.currentPosition;
+        this.currentPosition = nextPosition;
+        return true;
     }
 
     public String getProducedBy() {

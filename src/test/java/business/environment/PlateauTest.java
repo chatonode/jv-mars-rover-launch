@@ -14,7 +14,6 @@ public class PlateauTest {
 
     @BeforeEach
     public void setUp() {
-        // Initialize valid Plateau with valid coordinates
         validPlateau = new Plateau(10, 15);
     }
 
