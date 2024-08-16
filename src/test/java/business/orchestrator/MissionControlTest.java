@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import exceptions.business.InvalidClassParameterException;
+import exception.business.InvalidClassParameterException;
 
 class MissionControlTest {
 

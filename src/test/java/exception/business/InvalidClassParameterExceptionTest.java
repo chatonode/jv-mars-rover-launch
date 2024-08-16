@@ -1,4 +1,4 @@
-package exceptions.business;
+package exception.business;
 
 
 import java.io.ByteArrayOutputStream;

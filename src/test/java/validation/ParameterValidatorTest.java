@@ -8,7 +8,7 @@ import java.io.PrintStream;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-import exceptions.business.InvalidClassParameterException;
+import exception.business.InvalidClassParameterException;
 
 public class ParameterValidatorTest {
 

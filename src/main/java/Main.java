@@ -25,7 +25,11 @@ public class Main {
         MissionControl missionControl = new MissionControl("cevdet", 6, 12);
 
         Position destination = missionControl.createDestinationPosition(2, 3, CompassDirection.N);
-        Rover rover = missionControl.createRover("Curiosity", destination, "NASA", 2011);
-        missionControl.launchRover(rover);
+        Rover curiosity = new Rover("Curiosity", destination, "NASA", 2011);
+        missionControl.addRoverToBeLaunched(curiosity);
+//        missionControl.launchRover(rover);
+
+//        missionControl.moveRover(rover.getId());
+//        missionControl.rotateRover(rover.getId());
     }
 }

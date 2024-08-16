@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import business.environment.Position;
-import exceptions.business.InvalidClassParameterException;
+import exception.business.InvalidClassParameterException;
 import common.enums.CompassDirection;
 
 

@@ -1,4 +1,4 @@
-package exceptions.business;
+package exception.business;
 
 import business.movable.explorer.Rover;
 
