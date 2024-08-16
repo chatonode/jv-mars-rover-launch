@@ -1,6 +1,7 @@
 package input.parser;
 
-import common.Instruction;
+import common.enums.Instruction;
+import exceptions.input.ParsingException;
 
 import java.util.Arrays;
 import java.util.List;

@@ -1,4 +1,4 @@
-package common;
+package common.enums;
 
 public enum Instruction {
     L { // Spins the Rover 90 degrees Left without moving from the current coordinate point
