@@ -9,11 +9,11 @@ public class PlateauSize {
         this.yCoordinates = new YCoords(0, maximumYValue);
     }
 
-    public int getMaximumX() {
+    protected int getMaximumX() {
         return this.xCoordinates.getEnd();
     }
 
-    public int getMaximumY() {
+    protected int getMaximumY() {
         return this.yCoordinates.getEnd();
     }
 }

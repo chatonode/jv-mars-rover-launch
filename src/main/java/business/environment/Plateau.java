@@ -23,7 +23,11 @@ public class Plateau {
 
     private final Predicate<Integer> checkMaximumCoordinateValidity = ValidationUtils.checkCoordinateValidity;
 
-    public PlateauSize getPlateauSize() {
-        return plateauSize;
+    public int getMaxPlateauX() {
+        return this.plateauSize.getMaximumX();
+    }
+
+    public int getMaxPlateauY() {
+        return this.plateauSize.getMaximumY();
     }
 }
