@@ -9,7 +9,7 @@ import validation.ParamIsValidMap;
 import validation.ParameterValidator;
 import utils.ValidationUtils;
 
-import business.orchestrator.Position;
+import business.environment.Position;
 
 public abstract class Explorer implements Movable {
     protected final String id;

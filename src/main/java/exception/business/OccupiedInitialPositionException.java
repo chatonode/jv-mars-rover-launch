@@ -1,6 +1,6 @@
 package exception.business;
 
-import business.orchestrator.Position;
+import business.environment.Position;
 
 public class OccupiedInitialPositionException extends OccupiedPositionException {
     public OccupiedInitialPositionException(Position initialPosition) {

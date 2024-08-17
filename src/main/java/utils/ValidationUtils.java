@@ -1,7 +1,5 @@
 package utils;
 
-import business.orchestrator.Position;
-
 import java.time.LocalDate;
 import java.util.function.Predicate;
 

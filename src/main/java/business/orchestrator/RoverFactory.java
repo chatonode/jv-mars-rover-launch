@@ -1,5 +1,6 @@
 package business.orchestrator;
 
+import business.environment.Position;
 import business.movable.explorer.Rover;
 
 public final class RoverFactory extends Rover {

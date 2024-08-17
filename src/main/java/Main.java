@@ -1,7 +1,6 @@
-import business.movable.explorer.Rover;
 import business.orchestrator.MissionControl;
 import common.enums.CompassDirection;
-import business.orchestrator.Position;
+import business.environment.Position;
 
 public class Main {
     public static void main(String[] args) {
@@ -22,7 +21,7 @@ public class Main {
         MissionControl missionControl = new MissionControl("cevdet", 6, 12);
 
         Position destination1 = missionControl.createDestinationPosition(2, 3, CompassDirection.N);
-        Position destination2 = missionControl.createDestinationPosition(3, 2, CompassDirection.N);
+        Position destination2 = missionControl.createDestinationPosition(2, 2, CompassDirection.N);
 
 
         missionControl.addRoverToBeLaunched("Curiosity", destination1, "NASA", 2011);// PROBLEM

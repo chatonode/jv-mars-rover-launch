@@ -4,12 +4,11 @@ import java.util.*;
 import java.util.function.*;
 
 import business.environment.Plateau;
-import business.movable.explorer.Explorer;
+import business.environment.Position;
 import business.movable.explorer.Rover;
 import common.enums.CompassDirection;
 import exception.business.NoRoversToLaunchException;
 import exception.business.OccupiedInitialPositionException;
-import exception.business.OccupiedMovePositionException;
 import utils.ListUtils;
 import utils.ValidationUtils;
 import validation.ParamIsValidMap;
@@ -59,7 +58,7 @@ public class MissionControl {
             put("expectedFacingDirection", checkFacingDirectionValidity.test(expectedFacingDirection));
         }});
 
-        return new Position(expectedX, expectedY, expectedFacingDirection);
+        return new PositionFactory(expectedX, expectedY, expectedFacingDirection);
     }
 
     public void addRoverToBeLaunched(String name, Position initialPosition, String producedBy, int producedYear) {

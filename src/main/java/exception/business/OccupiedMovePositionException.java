@@ -1,6 +1,6 @@
 package exception.business;
 
-import business.orchestrator.Position;
+import business.environment.Position;
 
 public class OccupiedMovePositionException extends OccupiedPositionException {
     public OccupiedMovePositionException(Position nextPosition) {
