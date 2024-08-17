@@ -14,7 +14,6 @@ import business.orchestrator.Position;
 import exception.business.InvalidClassParameterException;
 import common.enums.CompassDirection;
 
-
 public class RoverTest {
 
     private MissionControl missionControl;
