@@ -9,6 +9,7 @@ import business.movable.explorer.Rover;
 import common.enums.CompassDirection;
 import exception.business.OccupiedInitialPositionException;
 import exception.business.OccupiedMovePositionException;
+import utils.ListUtils;
 import utils.ValidationUtils;
 import validation.ParamIsValidMap;
 import validation.ParameterValidator;
@@ -41,13 +42,7 @@ public class MissionControl {
                     && candidateRover.getInitialPosition().getY() == existingRover.getInitialPosition().getY()).toList().isEmpty();
 
     // Functions
-    private final static BiFunction<List<Rover>, String, List<Rover>> getFilteredRovers = ((rovers, searchFilter) -> rovers.stream().filter(
-                    rover -> rover.getId().toLowerCase().contains(searchFilter)
-                            || rover.getProducedBy().toLowerCase().contains(searchFilter)
-                            || rover.getProducedYear().toString().toLowerCase().contains(searchFilter)
-            )
-            .toList()
-    );
+
 
     // Consumers
     private final BiConsumer<RoverPositionMap, Rover> moveRoverToNewPosition = (roverPositionMap, rover) -> {
@@ -111,12 +106,12 @@ public class MissionControl {
         return this.roversOnEarth;
     }
 
-    public List<Rover> getRoversToBeLaunched(String searchFilter) {
+    public List<Rover> getRoversOnEarth(String searchFilter) {
         ParameterValidator.validateParams(new ParamIsValidMap() {{
             put("searchFilter", checkSearchFilterValidity.test(searchFilter));
         }});
 
-        return getFilteredRovers.apply(this.roversOnEarth, searchFilter);
+        return ListUtils.Rover.getFilteredRovers.apply(this.roversOnEarth, searchFilter);
     }
 
     public List<Rover> getRoversOnMars() {
@@ -128,7 +123,7 @@ public class MissionControl {
             put("searchFilter", checkSearchFilterValidity.test(searchFilter));
         }});
 
-        List<Rover> filteredRovers = getFilteredRovers.apply(this.plateau.getLandedRovers(), searchFilter);
+        List<Rover> filteredRovers = ListUtils.Rover.getFilteredRovers.apply(this.plateau.getLandedRovers(), searchFilter);
 
         return filteredRovers;
     }
