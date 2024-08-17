@@ -1,5 +1,5 @@
+import business.environment.Plateau;
 import business.orchestrator.MissionControl;
-import business.orchestrator.PositionFactory;
 import common.enums.CompassDirection;
 import business.environment.Position;
 
@@ -20,6 +20,7 @@ public class Main {
 //        System.out.println(rover.getCurrentPosition().getFacingDirection());
 
         MissionControl missionControl = new MissionControl("cevdet", 6, 12);
+        Plateau plateau = missionControl.getPlateau();
 
         Position destination1 = missionControl.createDestinationPosition(2, 3, CompassDirection.N);
         Position destination2 = missionControl.createDestinationPosition(2, 2, CompassDirection.N);

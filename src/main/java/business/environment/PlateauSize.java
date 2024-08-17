@@ -1,6 +1,6 @@
 package business.environment;
 
-public class PlateauSize {
+class PlateauSize {
     private final XCoords xCoordinates;
     private final YCoords yCoordinates;
 
@@ -9,21 +9,19 @@ public class PlateauSize {
         this.yCoordinates = new YCoords(0, maximumYValue);
     }
 
-    protected int getMinimumX() {
+    int getMinimumX() {
         return this.xCoordinates.getStart();
     }
 
-    protected int getMinimumY() {
+    int getMinimumY() {
         return this.yCoordinates.getStart();
     }
 
-    protected int getMaximumX() {
+    int getMaximumX() {
         return this.xCoordinates.getEnd();
     }
 
-    protected int getMaximumY() {
+    int getMaximumY() {
         return this.yCoordinates.getEnd();
     }
-
-
 }
