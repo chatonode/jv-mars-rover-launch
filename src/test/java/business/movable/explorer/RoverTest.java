@@ -1,4 +1,4 @@
-package business.movable.invader;
+package business.movable.explorer;
 
 import java.time.LocalDate;
 
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import business.environment.Position;
-import exceptions.business.InvalidClassParameterException;
+import exception.business.InvalidClassParameterException;
 import common.enums.CompassDirection;
 
 
@@ -113,7 +113,7 @@ public class RoverTest {
 
         @Test
         @DisplayName("Should throw InvalidClassParameterException for multiple invalid self parameters")
-        public void testMultipleInvalidSlefParameters() {
+        public void testMultipleInvalidSelfParameters() {
             Exception exception = assertThrows(InvalidClassParameterException.class, () -> {
                 new Rover("Rover1", new Position(5, 5, CompassDirection.N), "", 1950);
             });

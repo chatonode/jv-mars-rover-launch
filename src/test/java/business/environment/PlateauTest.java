@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import exceptions.business.InvalidClassParameterException;
+import exception.business.InvalidClassParameterException;
 
 public class PlateauTest {
 
@@ -20,7 +20,7 @@ public class PlateauTest {
     @Test
     @DisplayName("Should initialize Plateau correctly with valid coordinates")
     public void testValidPlateauInitialization() {
-        PlateauSize size = validPlateau.getPlateauSize();
+        PlateauSize size = new PlateauSize(validPlateau.getMaxPlateauX(), validPlateau.getMaxPlateauY());
         assertNotNull(size, "PlateauSize should not be null");
         assertEquals(10, size.getMaximumX(), "Maximum X coordinate should be 10");
         assertEquals(15, size.getMaximumY(), "Maximum Y coordinate should be 15");

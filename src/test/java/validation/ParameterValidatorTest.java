@@ -8,7 +8,7 @@ import java.io.PrintStream;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-import exceptions.business.InvalidClassParameterException;
+import exception.business.InvalidClassParameterException;
 
 public class ParameterValidatorTest {
 
@@ -24,7 +24,7 @@ public class ParameterValidatorTest {
 
         // Act
         InvalidClassParameterException thrownException = assertThrows(InvalidClassParameterException.class, () -> {
-            ParameterValidator.validateArgs(invalidParams);
+            ParameterValidator.validateParams(invalidParams);
         });
 
         // Verify exception message
@@ -48,7 +48,7 @@ public class ParameterValidatorTest {
 
         // Act
         InvalidClassParameterException thrownException = assertThrows(InvalidClassParameterException.class, () -> {
-            ParameterValidator.validateArgs(invalidParams);
+            ParameterValidator.validateParams(invalidParams);
         });
 
         // Verify exception message
@@ -67,7 +67,7 @@ public class ParameterValidatorTest {
         validParams.put("param1", true);
         validParams.put("param2", true);
 
-        assertDoesNotThrow(() -> ParameterValidator.validateArgs(validParams));
+        assertDoesNotThrow(() -> ParameterValidator.validateParams(validParams));
     }
 
     @AfterEach

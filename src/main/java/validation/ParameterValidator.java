@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Comparator;
 
-import exceptions.business.InvalidClassParameterException;
+import exception.business.InvalidClassParameterException;
 
 public class ParameterValidator {
-    public static void validateArgs(ParamIsValidMap paramIsValidMap) throws InvalidClassParameterException {
+    public static void validateParams(ParamIsValidMap paramIsValidMap) throws InvalidClassParameterException {
         List<String> invalidParams = paramIsValidMap.entrySet().stream()
                 .filter(paramIsValidEntry -> !paramIsValidEntry.getValue())
                 .map(Map.Entry::getKey)

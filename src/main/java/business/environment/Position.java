@@ -36,4 +36,14 @@ public class Position {
     public void setFacingDirection(CompassDirection facingDirection) {
         this.facingDirection = facingDirection;
     }
+
+    @Override
+    public String toString() {
+        String str = String.format("[%d,%d] - %s",
+                getX(),
+                getY(),
+                getFacingDirection().toReadableString());
+
+        return str;
+    }
 }

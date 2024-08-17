@@ -1,4 +1,4 @@
-package business.movable.invader;
+package business.movable.explorer;
 
 import java.util.function.Predicate;
 
@@ -8,14 +8,14 @@ import validation.ParamIsValidMap;
 
 import business.environment.Position;
 
-public class Rover extends Invader {
+public class Rover extends Explorer {
     private final String producedBy;
     private final Integer producedYear;
 
     public Rover(String name, Position initialPosition, String producedBy, Integer producedYear) {
         super(name, initialPosition);
 
-        ParameterValidator.validateArgs(new ParamIsValidMap() {{
+        ParameterValidator.validateParams(new ParamIsValidMap() {{
             put("producedBy", checkProducedByValidity.test(producedBy));
             put("producedYear", checkProducedYearValidity.test(producedYear));
         }});
@@ -31,7 +31,7 @@ public class Rover extends Invader {
 
     @Override
     public boolean move(Position nextPosition) {
-        ParameterValidator.validateArgs(new ParamIsValidMap() {{
+        ParameterValidator.validateParams(new ParamIsValidMap() {{
             put("nextPosition", checkNextPositionValidity.test(nextPosition));
         }});
 
