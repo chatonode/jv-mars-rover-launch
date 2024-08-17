@@ -1,6 +1,7 @@
 package business.environment;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
@@ -8,6 +9,8 @@ import business.movable.explorer.Explorer;
 import business.movable.explorer.Rover;
 import business.movable.explorer.Rovers;
 import exception.business.OccupiedInitialPositionException;
+import exception.business.OccupiedNextPositionException;
+import exception.business.RoverNotFoundOnPlateauException;
 import utils.ListUtils;
 import utils.ValidationUtils;
 import validation.ParameterValidator;
@@ -29,22 +32,35 @@ public class Plateau {
 
     // Predicates
     private final Predicate<Integer> checkMaximumCoordinateValidity = ValidationUtils.checkCoordinateValidity;
+    public static final BiPredicate<Rovers, Position> checkPositionIsFree = (currentRovers, position) ->
+            currentRovers.stream()
+                    .noneMatch(currentRover -> currentRover.getCurrentPosition().getX() == position.getX()
+                            && currentRover.getCurrentPosition().getY() == position.getY()
+                    );
 
     // Functions
 
-    public void landRoverOnPlateau(Rover rover) {
-        boolean isLandingPositionFree = this.isPositionEmpty(rover.getInitialPosition());
-        if (!isLandingPositionFree) throw new OccupiedInitialPositionException(rover.getInitialPosition());
+    public void landRoverOnPlateau(Rover roverToLand) {
+        boolean isLandingPositionFree = this.isPositionEmpty(roverToLand.getInitialPosition());
+        if (!isLandingPositionFree) throw new OccupiedInitialPositionException(roverToLand.getInitialPosition());
 
-        this.rovers.add(rover);
+        this.rovers.add(roverToLand);
     }
 
-    public void moveRoverOnPlateau(Rover rover) {
+    public void moveRoverOnPlateau(Rover roverToMove) {
+        boolean isRoverOnPlateau = this.rovers.stream().anyMatch(rover -> Objects.equals(roverToMove.getId(), rover.getId()));
+        if (!isRoverOnPlateau) {
+            throw new RoverNotFoundOnPlateauException();
+        }
 
+        boolean isNextPositionFree = this.isPositionEmpty(roverToMove.getCurrentPosition());
+        if (!isNextPositionFree) throw new OccupiedNextPositionException(roverToMove.getCurrentPosition());
+
+        // Move
     }
 
     public boolean isPositionEmpty(Position targetPosition) {
-        return ListUtils.Rover.checkLandingPositionIsFree.test(this.rovers, targetPosition);
+        return checkPositionIsFree.test(this.rovers, targetPosition);
     }
 
     public int getMinPlateauX() {

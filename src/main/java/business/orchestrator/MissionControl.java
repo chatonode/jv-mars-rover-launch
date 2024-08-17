@@ -38,19 +38,17 @@ public class MissionControl {
     private final Predicate<Integer> checkYBoundaryValidity = expectedY -> expectedY >= this.getPlateau().getMinPlateauY()
             && expectedY <= this.getPlateau().getMaxPlateauY();
     private final Predicate<CompassDirection> checkFacingDirectionValidity = Objects::nonNull;
-    private static final BiPredicate<Rovers, Position> checkPositionIsFree = (listOfRovers, candidatePosition) -> listOfRovers.stream()
+    private final BiPredicate<Rovers, Position> checkInitialPositionIsFree = (listOfRovers, candidatePosition) -> listOfRovers.stream()
             .filter(existingRover -> candidatePosition.getX() == existingRover.getInitialPosition().getX()
-                    && candidatePosition.getY() == existingRover.getInitialPosition().getY()).toList().isEmpty();
+                    && candidatePosition.getY() == existingRover.getInitialPosition().getY()).toList().isEmpty() && this.getPlateau().isPositionEmpty(candidatePosition);
 
     // Functions
 
 
     // Consumers
-    private final BiConsumer<RoverPositionMap, Rover> moveRoverToNewPosition = (roverPositionMap, rover) -> {
-        roverPositionMap.entrySet().stream()
-                .filter(roverPositionEntry -> Objects.equals(roverPositionEntry.getKey().getId(), rover.getId()))
-                .forEach(roverPositionEntry -> this.getPlateau().moveRoverOnPlateau(roverPositionEntry.getKey()));
-    };
+    private final BiConsumer<Rovers, Rover> moveRoverToNewPosition = (rovers, roverToMove) -> rovers.stream()
+            .filter(currentRover -> Objects.equals(currentRover.getId(), roverToMove.getId()))
+            .forEach(currentRover -> this.getPlateau().moveRoverOnPlateau(currentRover));
 
     public Position createDestinationPosition(int expectedX, int expectedY, CompassDirection expectedFacingDirection) {
         ParameterValidator.validateParams(new ParamIsValidMap() {{
@@ -63,9 +61,7 @@ public class MissionControl {
     }
 
     public void addRoverToBeLaunched(String name, Position initialPosition, String producedBy, int producedYear) {
-
-        boolean isInitialPositionFree = checkPositionIsFree.test(this.roversOnEarth, initialPosition)
-                && checkPositionIsFree.test(this.plateau.getRovers(), initialPosition);
+        boolean isInitialPositionFree = checkInitialPositionIsFree.test(this.roversOnEarth, initialPosition);
         if (!isInitialPositionFree) throw new OccupiedInitialPositionException(initialPosition);
 
         Rover candidateRover = new RoverFactory(name, initialPosition, producedBy, producedYear);
@@ -83,7 +79,7 @@ public class MissionControl {
 //    public void moveRover() {
 //        boolean isNewPositionValid = checkPositionIsFree.test(this.plateau.getLandedRovers(), roverToMove);
 //
-//        if (!isNewPositionValid) throw new OccupiedMovePositionException(roverToMove.getCurrentPosition());
+//        if (!isNewPositionValid) throw new OccupiedNextPositionException(roverToMove.getCurrentPosition());
 //
 //        this.plateau.moveRoverOnPlateau(roverToMove);
 //    }
