@@ -4,6 +4,7 @@ import java.util.UUID;
 import java.util.function.Predicate;
 
 import business.movable.Movable;
+import common.enums.OperationResult;
 import validation.ParamIsValidMap;
 import validation.ParameterValidator;
 import utils.ValidationUtils;
@@ -34,7 +35,8 @@ public abstract class Explorer implements Movable {
     protected final Predicate<Position> checkInitialPositionValidity = ValidationUtils.checkPositionValidity;
 
     protected void printCreationMessage() {
-        String creationMessage = String.format("CREATED: %s (%s) | Initial Coordinates: %s",
+        String creationMessage = String.format("%s: %s (%s) | Initial Coordinates: %s",
+                OperationResult.CREATED,
                 this.name,
                 this.getClass().getSimpleName(),
                 this.initialPosition.toString());

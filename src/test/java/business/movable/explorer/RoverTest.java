@@ -132,7 +132,7 @@ public class RoverTest {
         @DisplayName("Should successfully move to a valid nextPosition and update currentPosition")
         public void testValidMove() {
             Position newPosition = new Position(10, 10, CompassDirection.S);
-            assertTrue(validRover.move(newPosition), "Move method should return true for valid position");
+            assertTrue(validRover.moveTo(newPosition), "Move method should return true for valid position");
             assertEquals(newPosition, validRover.getCurrentPosition(), "Current position should be updated to newPosition");
         }
 
@@ -140,7 +140,7 @@ public class RoverTest {
         @DisplayName("Should throw InvalidClassParameterException for null nextPosition")
         public void testInvalidMoveNullPosition() {
             Exception exception = assertThrows(InvalidClassParameterException.class, () -> {
-                validRover.move(null);
+                validRover.moveTo(null);
             });
 
             assertEquals("Class parameter is invalid!", exception.getMessage(), "Exception message should match");
@@ -152,7 +152,7 @@ public class RoverTest {
             Position initialPosition = validRover.getCurrentPosition();
 
             assertThrows(InvalidClassParameterException.class, () -> {
-                validRover.move(null);
+                validRover.moveTo(null);
             });
             assertEquals(initialPosition, validRover.getCurrentPosition(), "Current position should remain unchanged after failed move");
         }

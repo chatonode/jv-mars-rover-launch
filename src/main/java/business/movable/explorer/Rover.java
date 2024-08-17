@@ -30,7 +30,7 @@ public class Rover extends Explorer {
     private final Predicate<Position> checkNextPositionValidity = ValidationUtils.checkPositionValidity;
 
     @Override
-    public boolean move(Position nextPosition) {
+    public boolean moveTo(Position nextPosition) {
         ParameterValidator.validateParams(new ParamIsValidMap() {{
             put("nextPosition", checkNextPositionValidity.test(nextPosition));
         }});

@@ -83,6 +83,8 @@ public class MissionControl {
 
     public void launchRovers() {
         this.roversOnEarth.forEach(this.plateau::landRoverOnPlateau);
+
+        this.roversOnEarth.clear();
     }
 
     public void moveRover(Rover roverToMove) {
@@ -117,11 +119,11 @@ public class MissionControl {
         return getFilteredRovers.apply(this.roversOnEarth, searchFilter);
     }
 
-    public List<Rover> getLandedRovers() {
+    public List<Rover> getRoversOnMars() {
         return this.plateau.getLandedRovers();
     }
 
-    public List<Rover> getLandedRovers(String searchFilter) {
+    public List<Rover> getRoversOnMars(String searchFilter) {
         ParameterValidator.validateParams(new ParamIsValidMap() {{
             put("searchFilter", checkSearchFilterValidity.test(searchFilter));
         }});

@@ -28,7 +28,7 @@ public class Plateau {
         roverPositionMap = new RoverPositionMap();
     }
 
-    // Validation Predicates
+    // Predicates
     private final Predicate<Integer> checkMaximumCoordinateValidity = ValidationUtils.checkCoordinateValidity;
     private final BiPredicate<RoverPositionMap, Rover> checkLandingPositionIsFree = (currentRoverPositionMap, rover) ->
             currentRoverPositionMap.entrySet().stream()
