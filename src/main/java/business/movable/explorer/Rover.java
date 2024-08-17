@@ -27,17 +27,6 @@ public class Rover extends Explorer {
     private final Predicate<String> checkProducedByValidity = ValidationUtils.checkStringValidity;
     private final Predicate<Integer> checkProducedYearValidity = ValidationUtils.checkRoverYearValidity;
 
-    private final Predicate<Position> checkNextPositionValidity = ValidationUtils.checkPositionValidity;
-
-    @Override
-    public boolean moveTo(Position nextPosition) {
-        ParameterValidator.validateParams(new ParamIsValidMap() {{
-            put("nextPosition", checkNextPositionValidity.test(nextPosition));
-        }});
-
-        this.currentPosition = nextPosition;
-        return true;
-    }
 
     public String getProducedBy() {
         return this.producedBy;

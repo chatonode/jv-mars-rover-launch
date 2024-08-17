@@ -60,4 +60,15 @@ public abstract class Explorer implements Movable {
     public Position getCurrentPosition() {
         return currentPosition;
     }
+
+    private final Predicate<Position> checkNextPositionValidity = ValidationUtils.checkPositionValidity;
+    @Override
+    public final boolean moveTo(Position nextPosition) {
+        ParameterValidator.validateParams(new ParamIsValidMap() {{
+            put("nextPosition", checkNextPositionValidity.test(nextPosition));
+        }});
+
+        this.currentPosition = nextPosition;
+        return true;
+    }
 }
