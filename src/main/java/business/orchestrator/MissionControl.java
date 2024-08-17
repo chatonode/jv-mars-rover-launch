@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.function.*;
 
 import business.environment.Plateau;
+import business.movable.explorer.Explorer;
 import business.movable.explorer.Rover;
 import common.enums.CompassDirection;
 import exception.business.NoRoversToLaunchException;
@@ -37,9 +38,9 @@ public class MissionControl {
     private final Predicate<Integer> checkYBoundaryValidity = expectedY -> expectedY >= this.getPlateau().getMinPlateauY()
             && expectedY <= this.getPlateau().getMaxPlateauY();
     private final Predicate<CompassDirection> checkFacingDirectionValidity = Objects::nonNull;
-    private static final BiPredicate<List<Rover>, Rover> checkPositionIsFree = (listOfRovers, candidateRover) -> listOfRovers.stream()
-            .filter(existingRover -> candidateRover.getInitialPosition().getX() == existingRover.getInitialPosition().getX()
-                    && candidateRover.getInitialPosition().getY() == existingRover.getInitialPosition().getY()).toList().isEmpty();
+    private static final BiPredicate<List<Rover>, Position> checkPositionIsFree = (listOfRovers, candidatePosition) -> listOfRovers.stream()
+            .filter(existingRover -> candidatePosition.getX() == existingRover.getInitialPosition().getX()
+                    && candidatePosition.getY() == existingRover.getInitialPosition().getY()).toList().isEmpty();
 
     // Functions
 
@@ -61,16 +62,14 @@ public class MissionControl {
         return new Position(expectedX, expectedY, expectedFacingDirection);
     }
 
-    public void addRoverToBeLaunched(Rover candidateRover) {
-        boolean isInitialPositionFree = checkPositionIsFree.test(this.roversOnEarth, candidateRover)
-                && checkPositionIsFree.test(this.plateau.getLandedRovers(), candidateRover);
-        if (!isInitialPositionFree) throw new OccupiedInitialPositionException(candidateRover.getInitialPosition());
+    public void addRoverToBeLaunched(String name, Position initialPosition, String producedBy, int producedYear) {
 
+        boolean isInitialPositionFree = checkPositionIsFree.test(this.roversOnEarth, initialPosition)
+                && checkPositionIsFree.test(this.plateau.getLandedRovers(), initialPosition);
+        if (!isInitialPositionFree) throw new OccupiedInitialPositionException(initialPosition);
+
+        Rover candidateRover = new RoverFactory(name, initialPosition, producedBy, producedYear);
         this.roversOnEarth.add(candidateRover);
-    }
-
-    public void addRoversToBeLaunched(List<Rover> candidateRovers) {
-        candidateRovers.forEach(this::addRoverToBeLaunched);
     }
 
     public void launchRovers() {
@@ -81,13 +80,13 @@ public class MissionControl {
         this.roversOnEarth.clear();
     }
 
-    public void moveRover(Rover roverToMove) {
-        boolean isNewPositionValid = checkPositionIsFree.test(this.plateau.getLandedRovers(), roverToMove);
-
-        if (!isNewPositionValid) throw new OccupiedMovePositionException(roverToMove.getCurrentPosition());
-
-        this.plateau.moveRoverOnPlateau(roverToMove);
-    }
+//    public void moveRover() {
+//        boolean isNewPositionValid = checkPositionIsFree.test(this.plateau.getLandedRovers(), roverToMove);
+//
+//        if (!isNewPositionValid) throw new OccupiedMovePositionException(roverToMove.getCurrentPosition());
+//
+//        this.plateau.moveRoverOnPlateau(roverToMove);
+//    }
 //
 //    public boolean rotateRover(Rover roverToRotate) {
 //

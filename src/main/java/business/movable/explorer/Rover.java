@@ -12,7 +12,7 @@ public class Rover extends Explorer {
     private final String producedBy;
     private final Integer producedYear;
 
-    public Rover(String name, Position initialPosition, String producedBy, Integer producedYear) {
+    protected Rover(String name, Position initialPosition, String producedBy, Integer producedYear) {
         super(name, initialPosition);
 
         ParameterValidator.validateParams(new ParamIsValidMap() {{
