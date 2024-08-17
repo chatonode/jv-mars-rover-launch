@@ -1,4 +1,5 @@
 import business.orchestrator.MissionControl;
+import business.orchestrator.PositionFactory;
 import common.enums.CompassDirection;
 import business.environment.Position;
 
@@ -22,7 +23,6 @@ public class Main {
 
         Position destination1 = missionControl.createDestinationPosition(2, 3, CompassDirection.N);
         Position destination2 = missionControl.createDestinationPosition(2, 2, CompassDirection.N);
-
 
         missionControl.addRoverToBeLaunched("Curiosity", destination1, "NASA", 2011);// PROBLEM
         System.out.println(missionControl.getRoversOnEarth());

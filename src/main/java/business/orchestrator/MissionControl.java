@@ -25,7 +25,7 @@ public class MissionControl {
         }});
 
         this.username = username;
-        this.plateau = new Plateau(maximumX, maximumY);
+        this.plateau = new PlateauFactory(maximumX, maximumY);
         this.roversOnEarth = new ArrayList<>();
     }
 

@@ -16,7 +16,7 @@ public class Plateau {
     private final PlateauSize plateauSize;
     private final RoverPositionMap roverPositionMap;
 
-    public Plateau(int maximumX, int maximumY) {
+    protected Plateau(int maximumX, int maximumY) {
         ParameterValidator.validateParams(new ParamIsValidMap() {{
             put("maximumX", checkMaximumCoordinateValidity.test(maximumX));
             put("maximumY", checkMaximumCoordinateValidity.test(maximumY));
