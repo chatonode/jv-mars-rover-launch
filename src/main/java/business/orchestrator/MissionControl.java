@@ -67,9 +67,6 @@ public class MissionControl {
         if (!isInitialPositionFree) throw new OccupiedInitialPositionException(candidateRover.getInitialPosition());
 
         this.roversOnEarth.add(candidateRover);
-
-        System.out.println(this.roversOnEarth);
-        System.out.println(this.plateau.getLandedRovers());
     }
 
     public void addRoversToBeLaunched(List<Rover> candidateRovers) {

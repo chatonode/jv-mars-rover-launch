@@ -1,8 +1,5 @@
 package utils;
 
-
-import business.movable.explorer.Rover;
-
 import java.util.List;
 import java.util.function.BiFunction;
 
