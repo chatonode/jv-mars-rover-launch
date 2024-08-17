@@ -15,7 +15,6 @@ import validation.ParamIsValidMap;
 
 public class Plateau {
     private final PlateauSize plateauSize;
-    //    private final RoverPositionMap roverPositionMap;
     private final Rovers rovers;
 
     protected Plateau(int maximumX, int maximumY) {
@@ -25,22 +24,16 @@ public class Plateau {
         }});
 
         this.plateauSize = new PlateauSize(maximumX, maximumY);
-//        roverPositionMap = new RoverPositionMap();
         rovers = new Rovers();
     }
 
     // Predicates
     private final Predicate<Integer> checkMaximumCoordinateValidity = ValidationUtils.checkCoordinateValidity;
-    private final BiPredicate<Rovers, Rover> checkLandingPositionIsFree = (currentRovers, rover) ->
-            currentRovers.stream()
-                    .noneMatch(currentRover -> currentRover.getCurrentPosition().getX() == rover.getInitialPosition().getX()
-                            && currentRover.getCurrentPosition().getY() == rover.getInitialPosition().getY()
-                    );
 
     // Functions
 
     public void landRoverOnPlateau(Rover rover) {
-        boolean isLandingPositionFree = checkLandingPositionIsFree.test(this.rovers, rover);
+        boolean isLandingPositionFree = this.isPositionEmpty(rover.getInitialPosition());
         if (!isLandingPositionFree) throw new OccupiedInitialPositionException(rover.getInitialPosition());
 
         this.rovers.add(rover);
@@ -48,6 +41,10 @@ public class Plateau {
 
     public void moveRoverOnPlateau(Rover rover) {
 
+    }
+
+    public boolean isPositionEmpty(Position targetPosition) {
+        return ListUtils.Rover.checkLandingPositionIsFree.test(this.rovers, targetPosition);
     }
 
     public int getMinPlateauX() {

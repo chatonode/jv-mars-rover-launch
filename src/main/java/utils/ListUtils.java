@@ -1,8 +1,11 @@
 package utils;
 
+import business.environment.Position;
+import business.movable.explorer.Rover;
 import business.movable.explorer.Rovers;
 
 import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
 
 
 public class ListUtils {
@@ -14,5 +17,11 @@ public class ListUtils {
                 )
                 .toList()
         );
+
+        public static final BiPredicate<Rovers, Position> checkLandingPositionIsFree = (currentRovers, position) ->
+                currentRovers.stream()
+                        .noneMatch(currentRover -> currentRover.getCurrentPosition().getX() == position.getX()
+                                && currentRover.getCurrentPosition().getY() == position.getY()
+                        );
     }
 }
