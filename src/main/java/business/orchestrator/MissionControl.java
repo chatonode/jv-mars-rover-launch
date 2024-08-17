@@ -6,6 +6,7 @@ import java.util.function.*;
 import business.environment.Plateau;
 import business.environment.Position;
 import business.movable.explorer.Rover;
+import business.movable.explorer.Rovers;
 import common.enums.CompassDirection;
 import exception.business.NoRoversToLaunchException;
 import exception.business.OccupiedInitialPositionException;
@@ -17,7 +18,7 @@ import validation.ParameterValidator;
 public class MissionControl {
     private final String username;
     private final Plateau plateau;
-    private final List<Rover> roversOnEarth;
+    private final Rovers roversOnEarth;
 
     public MissionControl(String username, int maximumX, int maximumY) {
         ParameterValidator.validateParams(new ParamIsValidMap() {{
@@ -26,7 +27,7 @@ public class MissionControl {
 
         this.username = username;
         this.plateau = new PlateauFactory(maximumX, maximumY);
-        this.roversOnEarth = new ArrayList<>();
+        this.roversOnEarth = new Rovers();
     }
 
     // Validation Predicates
@@ -37,7 +38,7 @@ public class MissionControl {
     private final Predicate<Integer> checkYBoundaryValidity = expectedY -> expectedY >= this.getPlateau().getMinPlateauY()
             && expectedY <= this.getPlateau().getMaxPlateauY();
     private final Predicate<CompassDirection> checkFacingDirectionValidity = Objects::nonNull;
-    private static final BiPredicate<List<Rover>, Position> checkPositionIsFree = (listOfRovers, candidatePosition) -> listOfRovers.stream()
+    private static final BiPredicate<Rovers, Position> checkPositionIsFree = (listOfRovers, candidatePosition) -> listOfRovers.stream()
             .filter(existingRover -> candidatePosition.getX() == existingRover.getInitialPosition().getX()
                     && candidatePosition.getY() == existingRover.getInitialPosition().getY()).toList().isEmpty();
 
@@ -64,7 +65,7 @@ public class MissionControl {
     public void addRoverToBeLaunched(String name, Position initialPosition, String producedBy, int producedYear) {
 
         boolean isInitialPositionFree = checkPositionIsFree.test(this.roversOnEarth, initialPosition)
-                && checkPositionIsFree.test(this.plateau.getLandedRovers(), initialPosition);
+                && checkPositionIsFree.test(this.plateau.getRovers(), initialPosition);
         if (!isInitialPositionFree) throw new OccupiedInitialPositionException(initialPosition);
 
         Rover candidateRover = new RoverFactory(name, initialPosition, producedBy, producedYear);
@@ -99,11 +100,11 @@ public class MissionControl {
         return this.plateau;
     }
 
-    public List<Rover> getRoversOnEarth() {
+    public Rovers getRoversOnEarth() {
         return this.roversOnEarth;
     }
 
-    public List<Rover> getRoversOnEarth(String searchFilter) {
+    public Rovers getRoversOnEarth(String searchFilter) {
         ParameterValidator.validateParams(new ParamIsValidMap() {{
             put("searchFilter", checkSearchFilterValidity.test(searchFilter));
         }});
@@ -111,16 +112,16 @@ public class MissionControl {
         return ListUtils.Rover.getFilteredRovers.apply(this.roversOnEarth, searchFilter);
     }
 
-    public List<Rover> getRoversOnMars() {
-        return this.plateau.getLandedRovers();
+    public Rovers getRoversOnMars() {
+        return this.plateau.getRovers();
     }
 
-    public List<Rover> getRoversOnMars(String searchFilter) {
+    public Rovers getRoversOnMars(String searchFilter) {
         ParameterValidator.validateParams(new ParamIsValidMap() {{
             put("searchFilter", checkSearchFilterValidity.test(searchFilter));
         }});
 
-        List<Rover> filteredRovers = ListUtils.Rover.getFilteredRovers.apply(this.plateau.getLandedRovers(), searchFilter);
+        Rovers filteredRovers = ListUtils.Rover.getFilteredRovers.apply(this.plateau.getRovers(), searchFilter);
 
         return filteredRovers;
     }
