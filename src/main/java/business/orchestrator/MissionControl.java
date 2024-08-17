@@ -7,6 +7,7 @@ import business.environment.Plateau;
 import business.environment.Position;
 import business.movable.explorer.Rover;
 import common.enums.CompassDirection;
+import exception.business.NoRoversToLaunchException;
 import exception.business.OccupiedInitialPositionException;
 import exception.business.OccupiedMovePositionException;
 import utils.ListUtils;
@@ -74,6 +75,8 @@ public class MissionControl {
     }
 
     public void launchRovers() {
+        if (this.roversOnEarth.isEmpty()) throw new NoRoversToLaunchException();
+
         this.roversOnEarth.forEach(this.plateau::landRoverOnPlateau);
 
         this.roversOnEarth.clear();
