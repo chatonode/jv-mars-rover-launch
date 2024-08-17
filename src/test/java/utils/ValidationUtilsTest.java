@@ -1,6 +1,8 @@
 package utils;
 
-import business.environment.Position;
+import business.orchestrator.MissionControl;
+import business.orchestrator.Position;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -14,13 +16,6 @@ public class ValidationUtilsTest {
         assertTrue(ValidationUtils.checkStringValidity.test("Valid String"), "String should be valid");
         assertFalse(ValidationUtils.checkStringValidity.test(null), "Null string should be invalid");
         assertFalse(ValidationUtils.checkStringValidity.test(" "), "Blank string should be invalid");
-    }
-
-    @Test
-    public void testCheckPositionValidity() {
-        Position validPosition = new Position(1, 1, null); // Assume Position can be initialized with null facingDirection
-        assertTrue(ValidationUtils.checkPositionValidity.test(validPosition), "Position should be valid");
-        assertFalse(ValidationUtils.checkPositionValidity.test(null), "Null position should be invalid");
     }
 
     @Test

@@ -6,7 +6,7 @@ import utils.ValidationUtils;
 import validation.ParameterValidator;
 import validation.ParamIsValidMap;
 
-import business.environment.Position;
+import business.orchestrator.Position;
 
 public class Rover extends Explorer {
     private final String producedBy;

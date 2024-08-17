@@ -1,6 +1,6 @@
 package business.movable;
 
-import business.environment.Position;
+import business.orchestrator.Position;
 
 public interface Movable {
     public boolean moveTo(Position nextPosition);

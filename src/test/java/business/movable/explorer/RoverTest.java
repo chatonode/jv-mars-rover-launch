@@ -4,24 +4,29 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import business.orchestrator.MissionControl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import business.environment.Position;
+import business.orchestrator.Position;
 import exception.business.InvalidClassParameterException;
 import common.enums.CompassDirection;
 
 
 public class RoverTest {
 
+    private MissionControl missionControl;
     private Rover validRover;
+    private Position validInitialPosition;
 
     @BeforeEach
     public void setUp() {
-        Position initialPosition = new Position(5, 5, CompassDirection.N);
+        missionControl = new MissionControl("test", 11, 12);
+        Position initialPosition = missionControl.createDestinationPosition(5, 5, CompassDirection.N);
         validRover = new Rover("Rover1", initialPosition, "NASA", 2020);
+        validInitialPosition = initialPosition;
     }
 
     @Test
@@ -45,12 +50,12 @@ public class RoverTest {
         @DisplayName("Should throw InvalidClassParameterException for invalid producedBy")
         public void testInvalidProducedBy() {
             Exception exception = assertThrows(InvalidClassParameterException.class, () -> {
-                new Rover("Rover1", new Position(5, 5, CompassDirection.N), "", 2020);
+                new Rover("Rover1", validInitialPosition, "", 2020);
             });
             assertEquals("Class parameter is invalid!", exception.getMessage(), "Exception message should match");
 
             exception = assertThrows(InvalidClassParameterException.class, () -> {
-                new Rover("Rover1", new Position(5, 5, CompassDirection.N), null, 2020);
+                new Rover("Rover1", validInitialPosition, null, 2020);
             });
             assertEquals("Class parameter is invalid!", exception.getMessage(), "Exception message should match");
         }
@@ -59,17 +64,17 @@ public class RoverTest {
         @DisplayName("Should throw InvalidClassParameterException for invalid producedYear")
         public void testInvalidProducedYear() {
             Exception exception = assertThrows(InvalidClassParameterException.class, () -> {
-                new Rover("Rover1", new Position(5, 5, CompassDirection.N), "NASA", 1950);
+                new Rover("Rover1", validInitialPosition, "NASA", 1950);
             });
             assertEquals("Class parameter is invalid!", exception.getMessage(), "Exception message should match");
 
             exception = assertThrows(InvalidClassParameterException.class, () -> {
-                new Rover("Rover1", new Position(5, 5, CompassDirection.N), "NASA", LocalDate.now().getYear() + 1);
+                new Rover("Rover1", validInitialPosition, "NASA", LocalDate.now().getYear() + 1);
             });
             assertEquals("Class parameter is invalid!", exception.getMessage(), "Exception message should match");
 
             exception = assertThrows(InvalidClassParameterException.class, () -> {
-                new Rover("Rover1", new Position(5, 5, CompassDirection.N), "NASA", null);
+                new Rover("Rover1", validInitialPosition, "NASA", null);
             });
             assertEquals("Class parameter is invalid!", exception.getMessage(), "Exception message should match");
         }
@@ -78,12 +83,12 @@ public class RoverTest {
         @DisplayName("Should throw InvalidClassParameterException for invalid name")
         public void testInvalidName() {
             Exception exception = assertThrows(InvalidClassParameterException.class, () -> {
-                new Rover("", new Position(5, 5, CompassDirection.N), "NASA", 2020);
+                new Rover("", validInitialPosition, "NASA", 2020);
             });
             assertEquals("Class parameter is invalid!", exception.getMessage(), "Exception message should match");
 
             exception = assertThrows(InvalidClassParameterException.class, () -> {
-                new Rover(null, new Position(5, 5, CompassDirection.N), "NASA", 2020);
+                new Rover(null, validInitialPosition, "NASA", 2020);
             });
             assertEquals("Class parameter is invalid!", exception.getMessage(), "Exception message should match");
         }
@@ -115,7 +120,7 @@ public class RoverTest {
         @DisplayName("Should throw InvalidClassParameterException for multiple invalid self parameters")
         public void testMultipleInvalidSelfParameters() {
             Exception exception = assertThrows(InvalidClassParameterException.class, () -> {
-                new Rover("Rover1", new Position(5, 5, CompassDirection.N), "", 1950);
+                new Rover("Rover1", validInitialPosition, "", 1950);
             });
             assertEquals("Class parameters are invalid!", exception.getMessage(), "Exception message should match");
 
@@ -131,7 +136,7 @@ public class RoverTest {
         @Test
         @DisplayName("Should successfully move to a valid nextPosition and update currentPosition")
         public void testValidMove() {
-            Position newPosition = new Position(10, 10, CompassDirection.S);
+            Position newPosition = missionControl.createDestinationPosition(10, 10, CompassDirection.S);
             assertTrue(validRover.moveTo(newPosition), "Move method should return true for valid position");
             assertEquals(newPosition, validRover.getCurrentPosition(), "Current position should be updated to newPosition");
         }

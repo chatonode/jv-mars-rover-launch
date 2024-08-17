@@ -1,7 +1,7 @@
 import business.movable.explorer.Rover;
 import business.orchestrator.MissionControl;
 import common.enums.CompassDirection;
-import business.environment.Position;
+import business.orchestrator.Position;
 
 public class Main {
     public static void main(String[] args) {
@@ -26,7 +26,7 @@ public class Main {
 
         Rover curiosity = new Rover("Curiosity", destination1, "NASA", 2011);
         missionControl.addRoverToBeLaunched(curiosity);
-        curiosity.moveTo(destination2);
+        curiosity.moveTo(destination2); // PROBLEM
         System.out.println(curiosity.getInitialPosition());
         System.out.println(curiosity.getCurrentPosition());
 //        missionControl.addRoverToBeLaunched(curiosity);

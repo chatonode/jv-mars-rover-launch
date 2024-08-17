@@ -9,7 +9,7 @@ import validation.ParamIsValidMap;
 import validation.ParameterValidator;
 import utils.ValidationUtils;
 
-import business.environment.Position;
+import business.orchestrator.Position;
 
 public abstract class Explorer implements Movable {
     protected final String id;
@@ -31,8 +31,10 @@ public abstract class Explorer implements Movable {
         this.printCreationMessage();
     }
 
-    protected final Predicate<String> checkNameValidity = ValidationUtils.checkStringValidity;
-    protected final Predicate<Position> checkInitialPositionValidity = ValidationUtils.checkPositionValidity;
+    protected static final Predicate<String> checkNameValidity = ValidationUtils.checkStringValidity;
+    protected static final Predicate<Position> checkPositionValidity = position -> position != null;
+    protected static final Predicate<Position> checkInitialPositionValidity = checkPositionValidity;
+    protected static final Predicate<Position> checkNextPositionValidity = checkPositionValidity;
 
     protected void printCreationMessage() {
         String creationMessage = String.format("%s: %s (%s) | Initial Coordinates: %s",
@@ -61,7 +63,6 @@ public abstract class Explorer implements Movable {
         return currentPosition;
     }
 
-    private final Predicate<Position> checkNextPositionValidity = ValidationUtils.checkPositionValidity;
     @Override
     public final boolean moveTo(Position nextPosition) {
         ParameterValidator.validateParams(new ParamIsValidMap() {{
