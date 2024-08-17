@@ -1,9 +1,10 @@
 package common.enums;
 
-public enum LogOperation {
+public enum OperationResult {
     CREATE,
     UPDATE,
     DELETE,
     LAUNCH,
-    SUSPEND
+    SUCCESS,
+    ABORTED
 }

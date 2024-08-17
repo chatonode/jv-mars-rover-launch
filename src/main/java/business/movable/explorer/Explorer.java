@@ -27,20 +27,18 @@ public abstract class Explorer implements Movable {
         this.initialPosition = initialPosition;
         this.currentPosition = this.initialPosition;
 
-        this.printLandingMessage();
+        this.printCreationMessage();
     }
 
     protected final Predicate<String> checkNameValidity = ValidationUtils.checkStringValidity;
     protected final Predicate<Position> checkInitialPositionValidity = ValidationUtils.checkPositionValidity;
 
-    protected void printLandingMessage() {
-        System.out.printf("%s (%s) is landed in these coordinates on the plateau X:%d - Y:%d, facing %s direction.\n",
+    protected void printCreationMessage() {
+        String creationMessage = String.format("CREATED: %s (%s) | Initial Coordinates: %s",
                 this.name,
                 this.getClass().getSimpleName(),
-                this.initialPosition.getX(),
-                this.initialPosition.getY(),
-                this.initialPosition.getFacingDirection()
-        );
+                this.initialPosition.toString());
+        System.out.println(creationMessage);
     }
 
     public String getId() {

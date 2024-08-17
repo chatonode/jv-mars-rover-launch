@@ -39,13 +39,10 @@ public class Position {
 
     @Override
     public String toString() {
-        String str = String.format("""
-                        Position
-                        X: %d - Y: %d - Direction: %s
-                        """,
+        String str = String.format("[%d,%d] - %s",
                 getX(),
                 getY(),
-                getFacingDirection());
+                getFacingDirection().toReadableString());
 
         return str;
     }

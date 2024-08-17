@@ -1,10 +1,13 @@
 package business.environment;
 
 import java.util.List;
+import java.util.function.BiPredicate;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import business.movable.explorer.Rover;
+import exception.business.OccupiedInitialPositionException;
 import utils.ValidationUtils;
 import validation.ParameterValidator;
 import validation.ParamIsValidMap;
@@ -25,24 +28,25 @@ public class Plateau {
         roverPositionMap = new RoverPositionMap();
     }
 
+    // Validation Predicates
     private final Predicate<Integer> checkMaximumCoordinateValidity = ValidationUtils.checkCoordinateValidity;
+    private final BiPredicate<RoverPositionMap, Rover> checkLandingPositionIsFree = (currentRoverPositionMap, rover) ->
+            currentRoverPositionMap.entrySet().stream()
+                    .noneMatch(roverPositionEntry -> roverPositionEntry.getValue().getX() == rover.getInitialPosition().getX()
+                            && roverPositionEntry.getValue().getY() == rover.getInitialPosition().getY()
+                    );
 
-    public boolean landRoverOnPlateau(Rover rover) {
-        var occupedRoverPositions = roverPositionMap.entrySet().stream()
-                .filter(roverPositionEntry -> roverPositionEntry.getValue().getX() == rover.getInitialPosition().getX()
-                        && roverPositionEntry.getValue().getY() == rover.getInitialPosition().getY()
-                )
-                .collect(Collectors.toMap(k -> k, v -> v));
+    // Functions
 
-        if (!occupedRoverPositions.isEmpty()) {
-            if (occupedRoverPositions.size() == 1) {
-                this.roverPositionMap.remove(rover);
-                return false;
-            }
-        }
+    public void landRoverOnPlateau(Rover rover) {
+        boolean isLandingPositionFree = checkLandingPositionIsFree.test(this.roverPositionMap, rover);
+        if (!isLandingPositionFree) throw new OccupiedInitialPositionException(rover.getInitialPosition());
 
         this.roverPositionMap.put(rover, rover.getInitialPosition());
-        return true;
+    }
+
+    public void moveRoverOnPlateau(Rover rover) {
+
     }
 
     public int getMinPlateauX() {
