@@ -1,15 +1,18 @@
 package business.log;
 
-import java.util.ArrayList;
-import java.util.List;
+import common.enums.OperationResult;
+
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class Logger {
-    private final List<String> logHistory;
+    private final Map<String, OperationResult> logHistory;
 
     private static Logger instance;
 
     private Logger() {
-        logHistory = new ArrayList<>();
+        logHistory = new HashMap<>();
         System.out.println("Logger is initialized!");
     }
 
@@ -20,11 +23,11 @@ public class Logger {
         return instance;
     }
 
-    public void addToLogs(String logMessage) {
-        getInstance().logHistory.add(logMessage);
+    public void addToLogs(String resourceId, OperationResult operation) {
+        getInstance().logHistory.put(resourceId, operation);
     }
 
-    public List<String> getLogHistory() {
+    public Map<String, OperationResult> getLogHistory() {
         return getInstance().logHistory;
     }
 }
