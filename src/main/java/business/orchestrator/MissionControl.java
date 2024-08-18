@@ -8,6 +8,7 @@ import business.environment.Position;
 import business.movable.explorer.Rover;
 import business.movable.explorer.Rovers;
 import common.enums.CompassDirection;
+import exception.business.PlateauAlreadyInitializedException;
 import exception.business.NoRoversToLaunchException;
 import exception.business.OccupiedInitialPositionException;
 import utils.ListUtils;
@@ -17,16 +18,15 @@ import validation.ParameterValidator;
 
 public class MissionControl {
     private final String username;
-    private final Plateau plateau;
+    private Plateau plateau;
     private final Rovers roversOnEarth;
 
-    public MissionControl(String username, int maximumX, int maximumY) {
+    public MissionControl(String username) {
         ParameterValidator.validateParams(new ParamIsValidMap() {{
             put("username", checkUsernameValidity.test(username));
         }});
 
-        this.username = username;
-        this.plateau = new PlateauFactory(maximumX, maximumY);
+        this.username = username.trim();
         this.roversOnEarth = new Rovers();
     }
 
@@ -49,6 +49,52 @@ public class MissionControl {
     private final BiConsumer<Rovers, Rover> moveRoverToNewPosition = (rovers, roverToMove) -> rovers.stream()
             .filter(currentRover -> Objects.equals(currentRover.getId(), roverToMove.getId()))
             .forEach(currentRover -> this.getPlateau().moveRoverOnPlateau(currentRover));
+
+    // Methods
+
+    // // Getters
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public Plateau getPlateau() {
+        return this.plateau;
+    }
+
+    public Rovers getRoversOnEarth() {
+        return this.roversOnEarth;
+    }
+
+    public Rovers getRoversOnEarth(String searchFilter) {
+        ParameterValidator.validateParams(new ParamIsValidMap() {{
+            put("searchFilter", checkSearchFilterValidity.test(searchFilter));
+        }});
+
+        return ListUtils.Rover.getFilteredRovers.apply(this.roversOnEarth, searchFilter);
+    }
+
+    public Rovers getRoversOnMars() {
+        return this.plateau.getRovers();
+    }
+
+    public Rovers getRoversOnMars(String searchFilter) {
+        ParameterValidator.validateParams(new ParamIsValidMap() {{
+            put("searchFilter", checkSearchFilterValidity.test(searchFilter));
+        }});
+
+        Rovers filteredRovers = ListUtils.Rover.getFilteredRovers.apply(this.plateau.getRovers(), searchFilter);
+
+        return filteredRovers;
+    }
+
+    // Operations
+
+    public void initializePlateau(int maximumX, int maximumY) {
+        if (this.plateau != null) throw new PlateauAlreadyInitializedException("Plateau is already initialized!");
+
+        this.plateau = new PlateauFactory(maximumX, maximumY);
+    }
 
     public Position createDestinationPosition(int expectedX, int expectedY, CompassDirection expectedFacingDirection) {
         ParameterValidator.validateParams(new ParamIsValidMap() {{
@@ -87,39 +133,5 @@ public class MissionControl {
 //    public boolean rotateRover(Rover roverToRotate) {
 //
 //    }
-
-    public String getUsername() {
-        return this.username;
-    }
-
-    public Plateau getPlateau() {
-        return this.plateau;
-    }
-
-    public Rovers getRoversOnEarth() {
-        return this.roversOnEarth;
-    }
-
-    public Rovers getRoversOnEarth(String searchFilter) {
-        ParameterValidator.validateParams(new ParamIsValidMap() {{
-            put("searchFilter", checkSearchFilterValidity.test(searchFilter));
-        }});
-
-        return ListUtils.Rover.getFilteredRovers.apply(this.roversOnEarth, searchFilter);
-    }
-
-    public Rovers getRoversOnMars() {
-        return this.plateau.getRovers();
-    }
-
-    public Rovers getRoversOnMars(String searchFilter) {
-        ParameterValidator.validateParams(new ParamIsValidMap() {{
-            put("searchFilter", checkSearchFilterValidity.test(searchFilter));
-        }});
-
-        Rovers filteredRovers = ListUtils.Rover.getFilteredRovers.apply(this.plateau.getRovers(), searchFilter);
-
-        return filteredRovers;
-    }
 
 }
