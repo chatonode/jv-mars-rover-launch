@@ -1,17 +1,17 @@
-package business.movable.explorer;
+package controller.movable.explorer;
 
 import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import business.orchestrator.MissionControl;
+import controller.orchestrator.MissionControl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import business.environment.Position;
+import controller.environment.Position;
 import exception.business.InvalidClassParameterException;
 import common.enums.CompassDirection;
 
@@ -51,60 +51,60 @@ public class RoverTest {
         @DisplayName("Should throw InvalidClassParameterException for invalid producedBy")
         public void testInvalidProducedBy() {
             Exception exception = assertThrows(InvalidClassParameterException.class, () -> new Rover("Rover1", validInitialPosition, "", 2020));
-            assertEquals("Class parameter is invalid!", exception.getMessage(), "Exception message should match");
+            assertEquals("Input is invalid!", exception.getMessage(), "Exception message should match");
 
             exception = assertThrows(InvalidClassParameterException.class, () -> new Rover("Rover1", validInitialPosition, null, 2020));
-            assertEquals("Class parameter is invalid!", exception.getMessage(), "Exception message should match");
+            assertEquals("Input is invalid!", exception.getMessage(), "Exception message should match");
         }
 
         @Test
         @DisplayName("Should throw InvalidClassParameterException for invalid producedYear")
         public void testInvalidProducedYear() {
             Exception exception = assertThrows(InvalidClassParameterException.class, () -> new Rover("Rover1", validInitialPosition, "NASA", 1950));
-            assertEquals("Class parameter is invalid!", exception.getMessage(), "Exception message should match");
+            assertEquals("Input is invalid!", exception.getMessage(), "Exception message should match");
 
             exception = assertThrows(InvalidClassParameterException.class, () -> new Rover("Rover1", validInitialPosition, "NASA", LocalDate.now().getYear() + 1));
-            assertEquals("Class parameter is invalid!", exception.getMessage(), "Exception message should match");
+            assertEquals("Input is invalid!", exception.getMessage(), "Exception message should match");
 
             exception = assertThrows(InvalidClassParameterException.class, () -> new Rover("Rover1", validInitialPosition, "NASA", null));
-            assertEquals("Class parameter is invalid!", exception.getMessage(), "Exception message should match");
+            assertEquals("Input is invalid!", exception.getMessage(), "Exception message should match");
         }
 
         @Test
         @DisplayName("Should throw InvalidClassParameterException for invalid name")
         public void testInvalidName() {
             Exception exception = assertThrows(InvalidClassParameterException.class, () -> new Rover("", validInitialPosition, "NASA", 2020));
-            assertEquals("Class parameter is invalid!", exception.getMessage(), "Exception message should match");
+            assertEquals("Input is invalid!", exception.getMessage(), "Exception message should match");
 
             exception = assertThrows(InvalidClassParameterException.class, () -> new Rover(null, validInitialPosition, "NASA", 2020));
-            assertEquals("Class parameter is invalid!", exception.getMessage(), "Exception message should match");
+            assertEquals("Input is invalid!", exception.getMessage(), "Exception message should match");
         }
 
         @Test
         @DisplayName("Should throw InvalidClassParameterException for invalid initialPosition")
         public void testInvalidInitialPosition() {
             Exception exception = assertThrows(InvalidClassParameterException.class, () -> new Rover("Rover1", null, "NASA", 2020));
-            assertEquals("Class parameter is invalid!", exception.getMessage(), "Exception message should match");
+            assertEquals("Input is invalid!", exception.getMessage(), "Exception message should match");
         }
 
         @Test
         @DisplayName("Should throw InvalidClassParameterException for multiple invalid inherited parameters")
         public void testMultipleInvalidInheritedParameters() {
             Exception exception = assertThrows(InvalidClassParameterException.class, () -> new Rover("", null, "NASA", 1968));
-            assertEquals("Class parameters are invalid!", exception.getMessage(), "Exception message should match");
+            assertEquals("Inputs are invalid!", exception.getMessage(), "Exception message should match");
 
             exception = assertThrows(InvalidClassParameterException.class, () -> new Rover(null, null, null, LocalDate.now().getYear() + 1));
-            assertEquals("Class parameters are invalid!", exception.getMessage(), "Exception message should match");
+            assertEquals("Inputs are invalid!", exception.getMessage(), "Exception message should match");
         }
 
         @Test
         @DisplayName("Should throw InvalidClassParameterException for multiple invalid self parameters")
         public void testMultipleInvalidSelfParameters() {
             Exception exception = assertThrows(InvalidClassParameterException.class, () -> new Rover("Rover1", validInitialPosition, "", 1950));
-            assertEquals("Class parameters are invalid!", exception.getMessage(), "Exception message should match");
+            assertEquals("Inputs are invalid!", exception.getMessage(), "Exception message should match");
 
             exception = assertThrows(InvalidClassParameterException.class, () -> new Rover(null, null, null, LocalDate.now().getYear() + 1));
-            assertEquals("Class parameters are invalid!", exception.getMessage(), "Exception message should match");
+            assertEquals("Inputs are invalid!", exception.getMessage(), "Exception message should match");
         }
     }
 

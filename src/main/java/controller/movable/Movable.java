@@ -1,6 +1,6 @@
-package business.movable;
+package controller.movable;
 
-import business.environment.Position;
+import controller.environment.Position;
 
 public interface Movable {
     public void move();

@@ -1,6 +1,6 @@
-package business.orchestrator;
+package controller.orchestrator;
 
-import business.environment.Plateau;
+import controller.environment.Plateau;
 
 final class PlateauFactory extends Plateau {
     PlateauFactory(int maximumX, int maximumY) {

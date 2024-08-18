@@ -28,10 +28,10 @@ public class ParameterValidatorTest {
         });
 
         // Verify exception message
-        assertEquals("Class parameter is invalid!", thrownException.getMessage());
+        assertEquals("Input is invalid!", thrownException.getMessage());
 
         // Verify System.err output
-        String expectedErrOutput = "Invalid Class Parameter:\n• param1\n";
+        String expectedErrOutput = "Invalid Input:\n• param1\n";
         assertEquals(expectedErrOutput, errContent.toString());
     }
 
@@ -52,10 +52,10 @@ public class ParameterValidatorTest {
         });
 
         // Verify exception message
-        assertEquals("Class parameters are invalid!", thrownException.getMessage());
+        assertEquals("Inputs are invalid!", thrownException.getMessage());
 
         // Verify System.err output
-        String expectedErrOutput = "Invalid Class Parameter List (2):\n" +
+        String expectedErrOutput = "Invalid Input List (2):\n" +
                 "• param1\n" +
                 "• param2\n";
         assertEquals(expectedErrOutput, errContent.toString());

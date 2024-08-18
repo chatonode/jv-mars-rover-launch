@@ -1,4 +1,4 @@
-package business.log;
+package controller.log;
 
 import common.enums.OperationResult;
 

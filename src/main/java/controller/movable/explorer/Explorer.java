@@ -1,16 +1,16 @@
-package business.movable.explorer;
+package controller.movable.explorer;
 
 import java.util.UUID;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import business.movable.Movable;
+import controller.movable.Movable;
 import common.enums.OperationResult;
 import validation.ParamIsValidMap;
 import validation.ParameterValidator;
 import utils.ValidationUtils;
 
-import business.environment.Position;
+import controller.environment.Position;
 
 public abstract class Explorer implements Movable {
     protected final String id;

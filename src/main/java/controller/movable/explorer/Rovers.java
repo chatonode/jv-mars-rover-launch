@@ -1,4 +1,4 @@
-package business.movable.explorer;
+package controller.movable.explorer;
 
 import java.util.ArrayList;
 

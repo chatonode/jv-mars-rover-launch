@@ -1,6 +1,6 @@
-package business.orchestrator;
+package controller.orchestrator;
 
-import business.environment.Position;
+import controller.environment.Position;
 import common.enums.CompassDirection;
 
 final class PositionFactory extends Position {

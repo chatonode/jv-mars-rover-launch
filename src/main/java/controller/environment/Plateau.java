@@ -1,16 +1,15 @@
-package business.environment;
+package controller.environment;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.BiPredicate;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import business.movable.explorer.Explorer;
-import business.movable.explorer.Rover;
-import business.movable.explorer.Rovers;
+import controller.movable.explorer.Explorer;
+import controller.movable.explorer.Rover;
+import controller.movable.explorer.Rovers;
 import exception.business.OccupiedInitialPositionException;
 import exception.business.OccupiedNextPositionException;
 import exception.business.RoverNotFoundOnPlateauException;

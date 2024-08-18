@@ -12,7 +12,7 @@ public class InvalidClassParameterException extends RuntimeException {
         super(message);
 
         if (!invalidParam.isBlank()) {
-            System.err.println("Invalid Class Parameter:");
+            System.err.println("Invalid Input:");
             System.err.println("• " + invalidParam);
         }
     }
@@ -21,7 +21,7 @@ public class InvalidClassParameterException extends RuntimeException {
         super(message);
 
         if (invalidParams.size() > 1) {
-            System.err.printf("Invalid Class Parameter List (%d):\n", invalidParams.size());
+            System.err.printf("Invalid Input List (%d):\n", invalidParams.size());
             invalidParams.forEach(arg -> System.err.println("• " + arg));
         }
     }
