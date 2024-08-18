@@ -19,8 +19,8 @@ public class Main {
 //        System.out.println(rover.getCurrentPosition().getY());
 //        System.out.println(rover.getCurrentPosition().getFacingDirection());
 
-        MissionControl missionControl = new MissionControl("cevdet", 6, 12);
-        Plateau plateau = missionControl.getPlateau();
+        MissionControl missionControl = new MissionControl("cevdet");
+        missionControl.initializePlateau(6, 12);
 
         Position destination1 = missionControl.createDestinationPosition(2, 3, CompassDirection.N);
         Position destination2 = missionControl.createDestinationPosition(2, 2, CompassDirection.N);
@@ -35,6 +35,8 @@ public class Main {
         missionControl.launchRovers();
         System.out.println("Rovers on Earth after Launch: " + missionControl.getRoversOnEarth());
         System.out.println("Rovers on Mars  after Launch: " + missionControl.getRoversOnMars());
+
+//        missionControl.moveRover();
 
 
         missionControl.getRoversOnMars().forEach(rover -> System.out.println(rover.getInitialPosition()));

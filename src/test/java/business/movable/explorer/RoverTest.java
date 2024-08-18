@@ -22,7 +22,8 @@ public class RoverTest {
 
     @BeforeEach
     public void setUp() {
-        missionControl = new MissionControl("test", 11, 12);
+        missionControl = new MissionControl("test");
+        missionControl.initializePlateau(11, 12);
         Position initialPosition = missionControl.createDestinationPosition(5, 5, CompassDirection.N);
         validRover = new Rover("Rover1", initialPosition, "NASA", 2020);
         validInitialPosition = initialPosition;
