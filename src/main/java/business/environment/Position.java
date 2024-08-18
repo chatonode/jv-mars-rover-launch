@@ -7,7 +7,7 @@ public class Position {
     private int y;
     private CompassDirection facingDirection;
 
-    public Position(int x, int y, CompassDirection facingDirection) {
+    protected Position(int x, int y, CompassDirection facingDirection) {
         this.x = x;
         this.y = y;
         this.facingDirection = facingDirection;

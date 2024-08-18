@@ -1,52 +1,84 @@
 package business.environment;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.function.BiPredicate;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
+import business.movable.explorer.Explorer;
 import business.movable.explorer.Rover;
+import business.movable.explorer.Rovers;
 import exception.business.OccupiedInitialPositionException;
+import exception.business.OccupiedNextPositionException;
+import exception.business.RoverNotFoundOnPlateauException;
+import utils.ListUtils;
 import utils.ValidationUtils;
 import validation.ParameterValidator;
 import validation.ParamIsValidMap;
 
-import business.orchestrator.RoverPositionMap;
-
 public class Plateau {
     private final PlateauSize plateauSize;
-    private final RoverPositionMap roverPositionMap;
+    private final Rovers rovers;
 
-    public Plateau(int maximumX, int maximumY) {
+    protected Plateau(int maximumX, int maximumY) {
         ParameterValidator.validateParams(new ParamIsValidMap() {{
             put("maximumX", checkMaximumCoordinateValidity.test(maximumX));
             put("maximumY", checkMaximumCoordinateValidity.test(maximumY));
         }});
 
         this.plateauSize = new PlateauSize(maximumX, maximumY);
-        roverPositionMap = new RoverPositionMap();
+        rovers = new Rovers();
     }
 
-    // Validation Predicates
+    // Predicates
     private final Predicate<Integer> checkMaximumCoordinateValidity = ValidationUtils.checkCoordinateValidity;
-    private final BiPredicate<RoverPositionMap, Rover> checkLandingPositionIsFree = (currentRoverPositionMap, rover) ->
-            currentRoverPositionMap.entrySet().stream()
-                    .noneMatch(roverPositionEntry -> roverPositionEntry.getValue().getX() == rover.getInitialPosition().getX()
-                            && roverPositionEntry.getValue().getY() == rover.getInitialPosition().getY()
-                    );
+    public static final BiPredicate<Rovers, Position> checkPositionIsFree = ((currentRovers, position) ->
+            currentRovers.stream()
+                    .noneMatch(currentRover -> currentRover.getCurrentPosition().getX() == position.getX()
+                            && currentRover.getCurrentPosition().getY() == position.getY()
+                    )
+    );
+//    private final Predicate<String> checkRoverExistsOnPlateauById = (roverId -> this.getRovers().stream().anyMatch(rover -> roverId.equals(rover.getId())));
+
+    // Consumers
+//    private final Consumer<String> moveRover = (roverId -> {
+//        Optional<Rover> foundRover = this.findRoverById.apply(roverId);
+//    });
 
     // Functions
+    public final Function<String, Rover> findRoverById = (roverId -> {
+        Optional<Rover> foundRover = this.getRovers().stream()
+                .filter(rover -> Objects.equals(rover.getId(), roverId))
+                .reduce((accumulator, currentRover) -> currentRover);
 
-    public void landRoverOnPlateau(Rover rover) {
-        boolean isLandingPositionFree = checkLandingPositionIsFree.test(this.roverPositionMap, rover);
-        if (!isLandingPositionFree) throw new OccupiedInitialPositionException(rover.getInitialPosition());
+        if (foundRover.isEmpty()) throw new RoverNotFoundOnPlateauException();
 
-        this.roverPositionMap.put(rover, rover.getInitialPosition());
+        return foundRover.get();
+    }
+    );
+
+    // Methods
+
+    public void landRoverOnPlateau(Rover roverToLand) {
+        boolean isLandingPositionFree = this.isPositionEmpty(roverToLand.getInitialPosition());
+        if (!isLandingPositionFree) throw new OccupiedInitialPositionException(roverToLand.getInitialPosition());
+
+        this.rovers.add(roverToLand);
     }
 
-    public void moveRoverOnPlateau(Rover rover) {
+    public void moveRoverOnPlateau(String roverId) {
+        Rover foundRover = findRoverById.apply(roverId);
+        boolean isNextPositionFree = this.isPositionEmpty(foundRover.getNextPosition());  // PROBLEM - no next position
+        if (!isNextPositionFree) throw new OccupiedNextPositionException(foundRover.getNextPosition());
 
+        foundRover.move();
+    }
+
+    public boolean isPositionEmpty(Position targetPosition) {
+        return checkPositionIsFree.test(this.rovers, targetPosition);
     }
 
     public int getMinPlateauX() {
@@ -65,15 +97,17 @@ public class Plateau {
         return this.plateauSize.getMaximumY();
     }
 
-    public RoverPositionMap getRoverPositionMap() {
-        return this.roverPositionMap;
+    public Rovers getRovers() {
+        return this.rovers;
     }
 
-    public List<Position> getOccupiedPositions() {
-        return this.roverPositionMap.values().stream().toList();
+    public Rovers getRovers(String searchFilter) {
+        return ListUtils.Rover.getFilteredRovers.apply(this.rovers, searchFilter);
     }
 
-    public List<Rover> getLandedRovers() {
-        return this.roverPositionMap.keySet().stream().toList();
+    public List<Position> getFilledPositions() {
+        return this.rovers.stream().map(Explorer::getCurrentPosition).toList();
     }
+
+
 }

@@ -3,9 +3,11 @@ package business.movable;
 import business.environment.Position;
 
 public interface Movable {
-    public boolean move(Position nextPosition);
+    public void move();
 
     public Position getInitialPosition();
 
     public Position getCurrentPosition();
+
+    public Position getNextPosition();
 }
