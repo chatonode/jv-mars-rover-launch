@@ -34,7 +34,7 @@ public abstract class Explorer implements Movable {
     protected static final Predicate<String> checkNameValidity = ValidationUtils.checkStringValidity;
     protected static final Predicate<Position> checkPositionValidity = position -> position != null;
     protected static final Predicate<Position> checkInitialPositionValidity = checkPositionValidity;
-    protected static final Predicate<Position> checkNextPositionValidity = checkPositionValidity;
+//    protected static final Predicate<Position> checkNextPositionValidity = checkPositionValidity;
 
     protected void printCreationMessage() {
         String creationMessage = String.format("%s: %s (%s) | Initial Coordinates: %s",
@@ -64,12 +64,12 @@ public abstract class Explorer implements Movable {
     }
 
     @Override
-    public final boolean moveTo(Position nextPosition) {
-        ParameterValidator.validateParams(new ParamIsValidMap() {{
-            put("nextPosition", checkNextPositionValidity.test(nextPosition));
-        }});
-
-        this.currentPosition = nextPosition;
-        return true;
+    public final void move() {
+        switch (this.currentPosition.getFacingDirection()) {
+            case N -> this.currentPosition.setY(this.currentPosition.getY() + 1);
+            case E -> this.currentPosition.setX(this.currentPosition.getX() + 1);
+            case S -> this.currentPosition.setY(this.currentPosition.getY() - 1);
+            case W -> this.currentPosition.setX(this.currentPosition.getX() - 1);
+        }
     }
 }
