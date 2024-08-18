@@ -1,6 +1,7 @@
 package business.movable.explorer;
 
 import java.util.UUID;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 import business.movable.Movable;
@@ -15,7 +16,8 @@ public abstract class Explorer implements Movable {
     protected final String id;
     protected final String name;
     protected final Position initialPosition;
-    protected Position currentPosition;
+    protected final Position currentPosition;
+    private final Position nextPosition;
 
     public Explorer(String name, Position initialPosition) {
         ParameterValidator.validateParams(new ParamIsValidMap() {{
@@ -27,6 +29,7 @@ public abstract class Explorer implements Movable {
         this.name = name;
         this.initialPosition = initialPosition;
         this.currentPosition = this.initialPosition;
+        this.nextPosition = generateCalculatedNextPosition.apply(this.currentPosition);
 
         this.printCreationMessage();
     }
@@ -55,12 +58,16 @@ public abstract class Explorer implements Movable {
 
     @Override
     public Position getInitialPosition() {
-        return initialPosition;
+        return this.initialPosition;
     }
 
     @Override
     public Position getCurrentPosition() {
-        return currentPosition;
+        return this.currentPosition;
+    }
+
+    public Position getNextPosition() {
+        return this.nextPosition;
     }
 
     @Override
@@ -71,5 +78,21 @@ public abstract class Explorer implements Movable {
             case S -> this.currentPosition.setY(this.currentPosition.getY() - 1);
             case W -> this.currentPosition.setX(this.currentPosition.getX() - 1);
         }
+
+        Position newNextPosition = generateCalculatedNextPosition.apply(this.currentPosition);
+        this.nextPosition.setX(newNextPosition.getX());
+        this.nextPosition.setY(newNextPosition.getY());
+        this.nextPosition.setFacingDirection(newNextPosition.getFacingDirection());
     }
+
+    private static final Function<Position, Position> generateCalculatedNextPosition = currentPosition -> switch (currentPosition.getFacingDirection()) {
+        case N ->
+                new PositionFactory(currentPosition.getX(), currentPosition.getY() + 1, currentPosition.getFacingDirection());
+        case E ->
+                new PositionFactory(currentPosition.getX() + 1, currentPosition.getY(), currentPosition.getFacingDirection());
+        case S ->
+                new PositionFactory(currentPosition.getX(), currentPosition.getY() - 1, currentPosition.getFacingDirection());
+        case W ->
+                new PositionFactory(currentPosition.getX() - 1, currentPosition.getY(), currentPosition.getFacingDirection());
+    };
 }

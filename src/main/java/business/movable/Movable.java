@@ -8,4 +8,6 @@ public interface Movable {
     public Position getInitialPosition();
 
     public Position getCurrentPosition();
+
+    public Position getNextPosition();
 }

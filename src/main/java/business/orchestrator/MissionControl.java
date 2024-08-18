@@ -46,9 +46,10 @@ public class MissionControl {
 
 
     // Consumers
-    private final BiConsumer<Rovers, Rover> moveRoverToNewPosition = (rovers, roverToMove) -> rovers.stream()
-            .filter(currentRover -> Objects.equals(currentRover.getId(), roverToMove.getId()))
-            .forEach(currentRover -> this.getPlateau().moveRoverOnPlateau(currentRover));
+//    private final BiConsumer<Rovers, Rover> moveRoverToNewPosition = (rovers, roverToMove) -> rovers.stream()
+//            .filter(currentRover -> Objects.equals(currentRover.getId(), roverToMove.getId()))
+//            .forEach(currentRover -> this.getPlateau().moveRoverOnPlateau(currentRover));
+
 
     // Methods
 
@@ -58,7 +59,7 @@ public class MissionControl {
         return this.username;
     }
 
-    public Plateau getPlateau() {
+    protected Plateau getPlateau() {
         return this.plateau;
     }
 

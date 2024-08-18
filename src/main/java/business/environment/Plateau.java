@@ -2,7 +2,10 @@ package business.environment;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.BiPredicate;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 import business.movable.explorer.Explorer;
@@ -32,13 +35,32 @@ public class Plateau {
 
     // Predicates
     private final Predicate<Integer> checkMaximumCoordinateValidity = ValidationUtils.checkCoordinateValidity;
-    public static final BiPredicate<Rovers, Position> checkPositionIsFree = (currentRovers, position) ->
+    public static final BiPredicate<Rovers, Position> checkPositionIsFree = ((currentRovers, position) ->
             currentRovers.stream()
                     .noneMatch(currentRover -> currentRover.getCurrentPosition().getX() == position.getX()
                             && currentRover.getCurrentPosition().getY() == position.getY()
-                    );
+                    )
+    );
+//    private final Predicate<String> checkRoverExistsOnPlateauById = (roverId -> this.getRovers().stream().anyMatch(rover -> roverId.equals(rover.getId())));
+
+    // Consumers
+//    private final Consumer<String> moveRover = (roverId -> {
+//        Optional<Rover> foundRover = this.findRoverById.apply(roverId);
+//    });
 
     // Functions
+    public final Function<String, Rover> findRoverById = (roverId -> {
+        Optional<Rover> foundRover = this.getRovers().stream()
+                .filter(rover -> Objects.equals(rover.getId(), roverId))
+                .reduce((accumulator, currentRover) -> currentRover);
+
+        if (foundRover.isEmpty()) throw new RoverNotFoundOnPlateauException();
+
+        return foundRover.get();
+    }
+    );
+
+    // Methods
 
     public void landRoverOnPlateau(Rover roverToLand) {
         boolean isLandingPositionFree = this.isPositionEmpty(roverToLand.getInitialPosition());
@@ -47,16 +69,12 @@ public class Plateau {
         this.rovers.add(roverToLand);
     }
 
-    public void moveRoverOnPlateau(Rover roverToMove) {
-        boolean isRoverOnPlateau = this.rovers.stream().anyMatch(rover -> Objects.equals(roverToMove.getId(), rover.getId()));
-        if (!isRoverOnPlateau) {
-            throw new RoverNotFoundOnPlateauException();
-        }
+    public void moveRoverOnPlateau(String roverId) {
+        Rover foundRover = findRoverById.apply(roverId);
+        boolean isNextPositionFree = this.isPositionEmpty(foundRover.getNextPosition());  // PROBLEM - no next position
+        if (!isNextPositionFree) throw new OccupiedNextPositionException(foundRover.getNextPosition());
 
-        boolean isNextPositionFree = this.isPositionEmpty(roverToMove.getCurrentPosition());
-        if (!isNextPositionFree) throw new OccupiedNextPositionException(roverToMove.getCurrentPosition());
-
-        // Move
+        foundRover.move();
     }
 
     public boolean isPositionEmpty(Position targetPosition) {

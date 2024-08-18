@@ -39,8 +39,11 @@ public class Main {
 //        missionControl.moveRover();
 
 
-        missionControl.getRoversOnMars().forEach(rover -> System.out.println(rover.getInitialPosition()));
-        missionControl.getRoversOnMars().forEach(rover -> System.out.println(rover.getCurrentPosition()));
+//        missionControl.getRoversOnMars().forEach(rover -> System.out.println(rover.getInitialPosition()));
+//        missionControl.getRoversOnMars().forEach(rover -> System.out.println(rover.getCurrentPosition()));
+        System.out.println(missionControl);
+
+
 
 
 //        missionControl.moveRover(rover.getId());
