@@ -1,6 +1,6 @@
 package exception.business;
 
-import business.environment.Position;
+import controller.environment.Position;
 
 public class OccupiedNextPositionException extends OccupiedPositionException {
     public OccupiedNextPositionException(Position nextPosition) {

@@ -1,4 +1,4 @@
-package business.environment;
+package controller.environment;
 
 public class XCoords {
     private final int start;

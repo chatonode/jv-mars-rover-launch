@@ -1,8 +1,6 @@
 package utils;
 
-import business.environment.Position;
-import business.movable.explorer.Rover;
-import business.movable.explorer.Rovers;
+import controller.movable.explorer.Rovers;
 
 import java.util.function.BiFunction;
 

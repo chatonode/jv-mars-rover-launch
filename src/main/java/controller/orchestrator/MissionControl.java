@@ -1,13 +1,14 @@
-package business.orchestrator;
+package controller.orchestrator;
 
 import java.util.*;
 import java.util.function.*;
 
-import business.environment.Plateau;
-import business.environment.Position;
-import business.movable.explorer.Rover;
-import business.movable.explorer.Rovers;
+import controller.environment.Plateau;
+import controller.environment.Position;
+import controller.movable.explorer.Rover;
+import controller.movable.explorer.Rovers;
 import common.enums.CompassDirection;
+import exception.business.InvalidClassParameterException;
 import exception.business.PlateauAlreadyInitializedException;
 import exception.business.NoRoversToLaunchException;
 import exception.business.OccupiedInitialPositionException;
@@ -21,7 +22,7 @@ public class MissionControl {
     private Plateau plateau;
     private final Rovers roversOnEarth;
 
-    public MissionControl(String username) {
+    public MissionControl(String username) throws InvalidClassParameterException {
         ParameterValidator.validateParams(new ParamIsValidMap() {{
             put("username", checkUsernameValidity.test(username));
         }});
@@ -59,7 +60,7 @@ public class MissionControl {
         return this.username;
     }
 
-    protected Plateau getPlateau() {
+    public Plateau getPlateau() {
         return this.plateau;
     }
 

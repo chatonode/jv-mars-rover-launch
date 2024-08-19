@@ -1,4 +1,4 @@
-package business.environment;
+package controller.environment;
 
 public class YCoords {
     private final int start;

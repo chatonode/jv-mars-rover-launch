@@ -32,7 +32,7 @@ public class InvalidClassParameterExceptionTest {
 
         // Capture the output
         String output = baos.toString();
-        assertTrue(output.contains("Invalid Class Parameter:"), "Output should contain 'Invalid Class Parameter:'");
+        assertTrue(output.contains("Invalid Input:"), "Output should contain 'Invalid Class Parameter:'");
         assertTrue(output.contains("• InvalidParam"), "Output should contain the invalid parameter 'InvalidParam'");
     }
 
@@ -54,7 +54,7 @@ public class InvalidClassParameterExceptionTest {
 
         // Capture the output
         String output = baos.toString();
-        assertTrue(output.contains("Invalid Class Parameter List (2):"), "Output should contain 'Invalid Class Parameter List (2):'");
+        assertTrue(output.contains("Invalid Input List (2):"), "Output should contain 'Invalid Class Parameter List (2):'");
         assertTrue(output.contains("• InvalidParam1"), "Output should contain the invalid parameter 'InvalidParam1'");
         assertTrue(output.contains("• InvalidParam2"), "Output should contain the invalid parameter 'InvalidParam2'");
     }

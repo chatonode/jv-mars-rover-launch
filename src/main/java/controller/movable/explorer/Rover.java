@@ -1,4 +1,4 @@
-package business.movable.explorer;
+package controller.movable.explorer;
 
 import java.util.function.Predicate;
 
@@ -6,7 +6,7 @@ import utils.ValidationUtils;
 import validation.ParameterValidator;
 import validation.ParamIsValidMap;
 
-import business.environment.Position;
+import controller.environment.Position;
 
 public class Rover extends Explorer {
     private final String producedBy;

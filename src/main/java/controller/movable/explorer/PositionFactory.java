@@ -1,6 +1,6 @@
-package business.movable.explorer;
+package controller.movable.explorer;
 
-import business.environment.Position;
+import controller.environment.Position;
 import common.enums.CompassDirection;
 
 class PositionFactory extends Position {

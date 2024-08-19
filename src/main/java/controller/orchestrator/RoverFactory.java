@@ -1,7 +1,7 @@
-package business.orchestrator;
+package controller.orchestrator;
 
-import business.environment.Position;
-import business.movable.explorer.Rover;
+import controller.environment.Position;
+import controller.movable.explorer.Rover;
 
 final class RoverFactory extends Rover {
     RoverFactory(String name, Position initialPosition, String producedBy, Integer producedYear) {

@@ -25,10 +25,10 @@ public class ParameterValidator {
     }
 
     private static void throwExceptionWithParams(String invalidParam) {
-        throw new InvalidClassParameterException("Class parameter is invalid!", invalidParam);
+        throw new InvalidClassParameterException("Input is invalid!", invalidParam);
     }
 
     private static void throwExceptionWithParams(List<String> invalidParams) {
-        throw new InvalidClassParameterException("Class parameters are invalid!", invalidParams);
+        throw new InvalidClassParameterException("Inputs are invalid!", invalidParams);
     }
 }

@@ -1,4 +1,4 @@
-package business.environment;
+package controller.environment;
 
 import common.enums.CompassDirection;
 
