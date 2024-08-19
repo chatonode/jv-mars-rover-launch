@@ -60,7 +60,7 @@ public class MissionControl {
         return this.username;
     }
 
-    protected Plateau getPlateau() {
+    public Plateau getPlateau() {
         return this.plateau;
     }
 

@@ -17,7 +17,6 @@ public class OutputManager {
     private static final String BLUE_COLOR = "\u001B[34m"; // ANSI escape code for blue text
     private static final String YELLOW_COLOR = "\u001B[33m";
     private static final String RED_COLOR = "\u001B[31m";
-
     private static final String RESET_COLOR = "\u001B[0m"; // ANSI escape code to reset the color
 
     public OutputManager() {
@@ -31,7 +30,10 @@ public class OutputManager {
     private static Function<String, String> redizeTextColor = str -> RED_COLOR.concat(str).concat(RESET_COLOR);
 
     private static Consumer<String> sysOutBlueizedText = str -> System.out.println(blueizeTextColor.apply(str));
+    private static Consumer<String> sysOutYellowizedText = str -> System.out.println(yellowizeTextColor.apply(str));
+    private static Consumer<String> sysOutRedizedText = str -> System.out.println(redizeTextColor.apply(str));
     private static Consumer<String> sysOutBlueizedTextWithSplitter = str -> System.out.println(blueizeTextColor.apply(str.concat("\n" + SPLITTER)));
+    private static Consumer<String> sysOutYellowizedTextWithSplitter = str -> System.out.println(yellowizeTextColor.apply(str.concat("\n" + SPLITTER)));
     private static Consumer<String> sysOutRedizedSplittersAroundText = str -> System.out.println(redizeTextColor.apply("\n" + SPLITTER + "\n" + str + "\n" + SPLITTER));
 
     public void run() {
@@ -40,7 +42,7 @@ public class OutputManager {
 
 
     private void initializeMissionControl() {
-        sysOutBlueizedTextWithSplitter.accept("Welcome to Mission Control!");
+        sysOutBlueizedTextWithSplitter.accept("Welcome to Mission Control of NASA!");
 
         boolean isValidated = false;
         while (!this.isTerminated && !isValidated) {
@@ -50,7 +52,7 @@ public class OutputManager {
                 missionControl = new MissionControl(username);
                 isValidated = true;
                 sysOutBlueizedTextWithSplitter.accept("Mission Control is initialized!");
-                sysOutBlueizedText.accept("Preparing plateau...");
+                sysOutYellowizedText.accept("Preparing plateau signals...");
                 this.initializePlateau();
             } catch (InvalidClassParameterException e) {
 //                sysOutRedizedSplittersAroundText.accept(e.getMessage());
@@ -60,7 +62,7 @@ public class OutputManager {
 
     private void initializePlateau() {
         System.out.println(blueizeTextColor.apply("Welcome on board, captain ") + greenizeTextColor.apply(missionControl.getUsername()) + blueizeTextColor.apply("! Nice to see you around!.."));
-        System.out.println("Now, determine the " + redizeTextColor.apply("size") + " of the " + redizeTextColor.apply("plateau") + " you want to launch your rovers:");
+        System.out.println("Please grab some coffee to yourself and determine the " + redizeTextColor.apply("size") + " of the " + redizeTextColor.apply("plateau") + " on Mars you want to launch your rovers:");
         boolean isValidated = false;
 
         while (!isValidated) {
@@ -72,9 +74,10 @@ public class OutputManager {
             try {
                 missionControl.initializePlateau(Integer.parseInt(maxX), Integer.parseInt(maxY));
                 isValidated = true;
-                sysOutBlueizedTextWithSplitter.accept("Plateau is initialized!");
-                sysOutBlueizedText.accept("Preparing rover garage...");
-                this.initializeEarthMenu();
+                sysOutYellowizedTextWithSplitter.accept("Plateau is initialized!");
+                sysOutBlueizedText.accept("Configuring stations on multi planets...");
+//                this.initializeEarthMenu();
+                this.initializePlanetMenus();
             } catch (InvalidClassParameterException | NumberFormatException e) {
                 if (e instanceof InvalidClassParameterException) {
 
@@ -87,15 +90,50 @@ public class OutputManager {
         }
     }
 
-    private void initializeEarthMenu() {
-        System.out.println("Well done, captain " + greenizeTextColor.apply(missionControl.getUsername()) + "! You managed to create your plateau!");
-        System.out.println("Now, check all the listed " + blueizeTextColor.apply("rover features") + " on our Earth office:");
-        System.out.println("1- Create a rover");
-        System.out.println("2- Get all the rovers on Earth");
-        System.out.println("3- Launch the rovers (currently " + blueizeTextColor.apply(String.valueOf(missionControl.getRoversOnEarth().size())) + ")");
+    private void initializePlanetMenus() {
+        System.out.println(blueizeTextColor.apply("Well done, captain ") + greenizeTextColor.apply(missionControl.getUsername()) + blueizeTextColor.apply("! You managed to create your plateau!"));
+        sysOutBlueizedText.accept("At this moment, we need to select the planet (station) to operate on there!");
+        boolean isValidated = false;
 
+        while (!isValidated || !this.isTerminated) {
+            System.out.println("Which " + redizeTextColor.apply("target planet") + " station do you want to enter?");
+            System.out.println(blueizeTextColor.apply("(1)- Earth"));
+            System.out.println(yellowizeTextColor.apply("(2)- Mars"));
+            System.out.println("(0)- Exit");
+            printPlateauInfo();
+            String menuOption = input.nextLine();
+
+            switch (menuOption) {
+                case "1":
+                    initializeEarthMenu();
+                    isValidated = true;
+                    break;
+                case "2":
+                    initializeMarsMenu();
+                    isValidated = true;
+                    break;
+                case "0":
+                    terminateOperation();
+                    isValidated = true;
+                    break;
+                default:
+                    printSelectMenuItemsErrorMessage(3);
+                    break;
+            }
+
+        }
+    }
+
+    private void initializeEarthMenu() {
+//        boolean isOnEarth = false;
         boolean isValidated = false;
         while (!isValidated) {
+            System.out.println("Select one of the " + redizeTextColor.apply("operation") + "s in our Earth station:");
+            System.out.println(blueizeTextColor.apply("(1)") + "- Create a rover");
+            System.out.println(blueizeTextColor.apply("(2)") + "- Get all the rovers on Earth");
+            System.out.println(blueizeTextColor.apply("(3)") + "- Launch the rovers (currently " + blueizeTextColor.apply(String.valueOf(missionControl.getRoversOnEarth().size())) + ")");
+            System.out.println("(0)- Back to Planet Menu");
+
             String menuOption = this.input.nextLine();
             switch (menuOption) {
                 case "1":
@@ -108,11 +146,14 @@ public class OutputManager {
                     break;
                 case "3":
                     earthMenuLaunchRovers();
-                    System.out.println("coming back here?");
                     isValidated = true;
                     break;
+                case "0":
+                    isValidated = true;
+//                    isOnEarth = true;
+                    break;
                 default:
-                    System.err.println("Select between " + redizeTextColor.apply("3") + " menu items");
+                    printSelectMenuItemsErrorMessage(4);
                     break;
             }
         }
@@ -120,19 +161,18 @@ public class OutputManager {
 
     private void earthMenuCreateRover() {
         System.out.println("Create a" + blueizeTextColor.apply("rover") + "to launch:");
+        // TODO: Check Position first with this.missionControl.isPositionFree + in boundaries check??
     }
 
     private void earthMenuListRovers() {
-
+        // TODO: this.missionControl.getRoversOnEarth
     }
 
     private void earthMenuLaunchRovers() {
-        System.out.println();
-        System.out.println("Are you sure you want to " + redizeTextColor.apply("launch ") + greenizeTextColor.apply(String.valueOf(missionControl.getRoversOnEarth().size())) + redizeTextColor.apply(" rover(s)") + "?");
-
 
         boolean isValidated = false;
         while (!isValidated) {
+            System.out.println("Are you sure you want to " + redizeTextColor.apply("launch ") + greenizeTextColor.apply(String.valueOf(missionControl.getRoversOnEarth().size())) + redizeTextColor.apply(" rover(s)") + "?");
             System.out.print(greenizeTextColor.apply("\ny") + "/" + redizeTextColor.apply("N") + ": ");
             String menuOption = this.input.nextLine();
 
@@ -146,7 +186,7 @@ public class OutputManager {
                         break;
                     }
                     isValidated = true;
-                    sysOutBlueizedTextWithSplitter.accept("Launched rover(s) to the plateau!");
+                    sysOutBlueizedTextWithSplitter.accept("Launched rover(s) to the Mars plateau!");
                     break;
                 case "n":
                     isValidated = true;
@@ -154,9 +194,46 @@ public class OutputManager {
                     sysOutBlueizedTextWithSplitter.accept("Returning to Earth office...");
                     break;
                 default:
-                    System.err.println("Select between " + redizeTextColor.apply("2") + " menu items");
+                    System.err.println("type " + greenizeTextColor.apply("y") + " or " + redizeTextColor.apply("N") + " to continue");
                     break;
             }
         }
+    }
+
+
+    private void initializeMarsMenu() {
+        System.out.println(yellowizeTextColor.apply("Oh, what an instant travel to the Mars, captain " + greenizeTextColor.apply(this.missionControl.getUsername())));
+//        System.out.println(yellowizeTextColor.apply("    (currently ") + blueizeTextColor.apply(String.valueOf(missionControl.getRoversOnMars().size())) + "active rovers on a mission)");
+        printPlateauInfo();
+        System.out.println("1- Move a rover with set of instructions");
+        System.out.println("2- List all rovers");
+        System.out.println("3- List filtered rovers");
+        System.out.println("4- See rovers on the map");
+    }
+
+    private void terminateOperation() {
+        input.close();
+        this.isTerminated = true;
+        printGoodByeMessage();
+    }
+
+    private static void printSelectMenuItemsErrorMessage(int numberOfMenuItems) {
+        System.err.println("Select between " + redizeTextColor.apply(String.valueOf(numberOfMenuItems)) + " menu items");
+    }
+
+    private void printPlateauInfo() {
+        if (missionControl.getPlateau() != null) {
+            System.out.printf(yellowizeTextColor.apply("   Plateau Info: from [%s:%s] to [%s:%s]\n"),
+                    this.missionControl.getPlateau().getMinPlateauX(),
+                    this.missionControl.getPlateau().getMinPlateauY(),
+                    this.missionControl.getPlateau().getMaxPlateauX(),
+                    this.missionControl.getPlateau().getMaxPlateauY()
+            );
+        }
+    }
+
+    private void printGoodByeMessage() {
+        System.out.println(SPLITTER);
+        System.out.println("Good bye then, Captain " + greenizeTextColor.apply(this.missionControl.getUsername()) + "!");
     }
 }
