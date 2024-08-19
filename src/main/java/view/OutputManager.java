@@ -75,7 +75,7 @@ public class OutputManager {
                 missionControl.initializePlateau(Integer.parseInt(maxX), Integer.parseInt(maxY));
                 isValidated = true;
                 sysOutYellowizedTextWithSplitter.accept("Plateau is initialized!");
-                sysOutBlueizedText.accept("Configuring stations on multi planets...");
+                sysOutBlueizedTextWithSplitter.accept("Configuring stations on multi planets...");
 //                this.initializeEarthMenu();
                 this.initializePlanetMenus();
             } catch (InvalidClassParameterException | NumberFormatException e) {
@@ -99,8 +99,8 @@ public class OutputManager {
             System.out.println("Which " + redizeTextColor.apply("target planet") + " station do you want to enter?");
             System.out.println(blueizeTextColor.apply("(1)- Earth"));
             System.out.println(yellowizeTextColor.apply("(2)- Mars"));
-            System.out.println("(0)- Exit");
             printPlateauInfo();
+            System.out.println("(0)- Exit");
             String menuOption = input.nextLine();
 
             switch (menuOption) {
