@@ -7,6 +7,7 @@ import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import common.enums.CompassDirection;
 import controller.movable.explorer.Explorer;
 import controller.movable.explorer.Rover;
 import controller.movable.explorer.Rovers;
@@ -62,7 +63,7 @@ public class Plateau {
     // Methods
 
     public void landRoverOnPlateau(Rover roverToLand) {
-        boolean isLandingPositionFree = this.isPositionEmpty(roverToLand.getInitialPosition());
+        boolean isLandingPositionFree = this.isPositionEmpty(roverToLand.getInitialPosition().getX(), roverToLand.getInitialPosition().getY());
         if (!isLandingPositionFree) throw new OccupiedInitialPositionException(roverToLand.getInitialPosition());
 
         this.rovers.add(roverToLand);
@@ -70,14 +71,14 @@ public class Plateau {
 
     public void moveRoverOnPlateau(String roverId) {
         Rover foundRover = findRoverById.apply(roverId);
-        boolean isNextPositionFree = this.isPositionEmpty(foundRover.getNextPosition());  // PROBLEM - no next position
+        boolean isNextPositionFree = this.isPositionEmpty(foundRover.getNextPosition().getX(), foundRover.getNextPosition().getY());
         if (!isNextPositionFree) throw new OccupiedNextPositionException(foundRover.getNextPosition());
 
         foundRover.move();
     }
 
-    public boolean isPositionEmpty(Position targetPosition) {
-        return checkPositionIsFree.test(this.rovers, targetPosition);
+    public boolean isPositionEmpty(int targetX, int targetY) {
+        return checkPositionIsFree.test(this.rovers, new Position(targetX, targetY, null));
     }
 
     public int getMinPlateauX() {
