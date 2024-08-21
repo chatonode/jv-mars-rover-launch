@@ -41,7 +41,8 @@ public class MissionControl {
     private final Predicate<CompassDirection> checkFacingDirectionValidity = Objects::nonNull;
     private final BiPredicate<Rovers, Position> checkInitialPositionIsFree = (listOfRovers, candidatePosition) -> listOfRovers.stream()
             .filter(existingRover -> candidatePosition.getX() == existingRover.getInitialPosition().getX()
-                    && candidatePosition.getY() == existingRover.getInitialPosition().getY()).toList().isEmpty() && this.getPlateau().isPositionEmpty(candidatePosition);
+                    && candidatePosition.getY() == existingRover.getInitialPosition().getY()).toList().isEmpty()
+            && this.getPlateau().isPositionEmpty(candidatePosition.getX(), candidatePosition.getY());
 
     // Functions
 
