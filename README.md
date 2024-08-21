@@ -60,7 +60,7 @@ The project is developed with **Java 21** in **IntelliJ IDEA Community Edition**
     - Click on the **Reload** button in the Maven tool window to ensure all dependencies are downloaded.
 
 4. **Run the Application**:
-    - Locate the `Main` class in your project (e.g., `src/main/java/com/yourpackage/Main.java`).
+    - Locate the `Main` class in your project (e.g., `src/main/java/Main.java`).
     - Right-click on the `Main` class and select **Run 'Main'**.
     - The console will display the output of the application, and you can interact with it through the IntelliJ terminal.
 
