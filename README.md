@@ -25,10 +25,11 @@
 
 The application is structured with a clear separation of concerns across different layers:
 
-- `input`: Handles parsing of user inputs.
-- `view`: **Output Manager** handles displaying the presentation of information to the user, communicating with `controller` and `input`.
-- `controller`: **Mission Control** implements the core business logic, orchestrating operations between the various components, validating them and handling resource creating exceptions well.
-- `Main`: is the entrance point of entire application
+- `Main`: is the entrance point of entire application, calls `run` method of **Output Manager** to initialise the application.
+- `/view`: handles displaying the presentation of information to the user, consuming `orchestrator` and `input` layers.
+- `/input`: Handles parsing of user inputs.
+- `/controller`: implements the core business logic, exposes them outside with **Mission Control**.
+  - `/controller/orchestrator`: (a.k.a. **Mission Control**) orchestrates operations between the various components, takes the responsibility of handling business-related validations, distributes atomic validations to each resource itself. 
 
 ## Testing
 
@@ -64,40 +65,42 @@ The project is developed with **Java 21** in **IntelliJ IDEA Community Edition**
     - Right-click on the `Main` class and select **Run 'Main'**.
     - The console will display the output of the application, and you can interact with it through the IntelliJ terminal.
 
-### Running Tests
 
-To run the tests, execute the following command:
+## Usage
 
-```bash
-mvn test
-```
+After starting the application, you will be prompted to create a plateau by specifying the maximum `x` and `y` coordinates. You can then choose to perform operations on `Earth` or `Mars`, following a series of intuitive prompts.
 
-This command will run all the unit tests in the project, ensuring that the business logic works as expected.
+### Example Workflow
 
-## Continuous Integration (CI)
+1. **Create a plateau** with dimensions `5 and 6`.
+2. **Select Earth** to add rovers to the launch station.
+   - Add as much as rover you want whenever you are on Earth.
+3. **Launch** all the added rovers to Mars plateau.
+4. **On Mars**, you have the options of
+   - view the rovers on the plateau
+   - move/rotate them as needed.
+5. Travel between **Mars** and **Earth** stations to accomplish one of the certain operations at above.
 
-This project uses GitHub Actions for continuous integration. The CI pipeline is defined in `.github/workflows/maven.yml` and performs the following steps:
+## Core Java Features and Complementary Techniques
+During this project, the following core Java features and programming techniques were utilised:
+
+- OOP Principles & Design Patterns
+- Data Structures
+- Streams & Functions
+- Exception Handling
+- Clean Code
+- TDD & CI Practices
+- Interactive Console UI
+
+### Continuous Integration (CI)
+
+This project uses GitHub Actions for continuous integration. The CI pipeline is defined in `.github/workflows/maven.yml` and performs the following steps, **after a Pull Request is created**:
 
 - **Checkout the Code**: Pulls the latest code from the repository.
 - **Set up Java 21**: Configures the environment with Java 21 using the Temurin distribution.
 - **Build with Maven**: Compiles the project and packages it.
 - **Run Tests**: Executes all JUnit tests to ensure the code is functioning correctly.
 
-## Usage
-
-After starting the application, you will be prompted to create a plateau by specifying the maximum x and y coordinates. You can then choose to perform operations on Earth or Mars, following a series of intuitive prompts.
-
-### Example Workflow
-
-1. **Create a plateau** with dimensions (5, 5).
-2. **Select Earth** to add rovers to the launch station.
-3. **Launch** the rovers to Mars.
-4. **On Mars**, view the plateau and move/rotate rovers as needed.
-
 ## Contribution
 
 Contributions are welcome! If you'd like to contribute, please fork the repository and create a pull request.
-
-## License
-
-> TBD
